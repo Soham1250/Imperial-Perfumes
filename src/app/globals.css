@@ -98,6 +98,68 @@
   }
 }
 
+/* Text reveal animations */
+@keyframes textReveal {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes gradientText {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes letterSpacing {
+  0% {
+    letter-spacing: -0.5em;
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.6;
+  }
+  100% {
+    letter-spacing: normal;
+    opacity: 1;
+  }
+}
+
+@keyframes slideInBlur {
+  0% {
+    letter-spacing: -0.5em;
+    filter: blur(12px);
+    opacity: 0;
+  }
+  100% {
+    filter: blur(0);
+    opacity: 1;
+  }
+}
+
+@keyframes glowPulse {
+  0% {
+    text-shadow: 0 0 5px rgba(138, 43, 226, 0.5), 0 0 15px rgba(138, 43, 226, 0.3);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(138, 43, 226, 0.8), 0 0 30px rgba(138, 43, 226, 0.5);
+  }
+  100% {
+    text-shadow: 0 0 5px rgba(138, 43, 226, 0.5), 0 0 15px rgba(138, 43, 226, 0.3);
+  }
+}
+
 .animate-fade-in {
   animation: fadeIn 0.8s ease-out forwards;
   opacity: 0;
@@ -109,6 +171,54 @@
 
 .animation-delay-400 {
   animation-delay: 0.4s;
+}
+
+.animation-delay-600 {
+  animation-delay: 0.6s;
+}
+
+.animation-delay-800 {
+  animation-delay: 0.8s;
+}
+
+.text-reveal {
+  display: inline-block;
+  overflow: hidden;
+}
+
+.text-reveal span {
+  display: inline-block;
+  animation: textReveal 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #D0D0D0, #8A2BE2, #D4AF37, #D0D0D0);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+  animation: gradientText 6s ease infinite;
+}
+
+.letter-spacing-animation {
+  animation: letterSpacing 1s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+}
+
+.slide-in-blur {
+  animation: slideInBlur 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+.glow-text {
+  animation: glowPulse 3s infinite;
+}
+
+/* Fade-in animation for collections page */
+.fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+  opacity: 0;
 }
 
 .mobile-menu-transition {

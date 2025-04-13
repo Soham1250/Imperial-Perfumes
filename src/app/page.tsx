@@ -4,56 +4,45 @@ import Image from 'next/image'
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen bg-blck-purple">
+    <div className="flex flex-col min-h-screen bg-blck-darkPurple">
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/hero-bg.jpg"
-            alt="Luxury perfume background"
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-blck-darkPurple opacity-80" />
-        </div>
+      <section className="relative h-screen flex items-center justify-center bg-blck-darkPurple overflow-hidden">
+        {/* Animated background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blck-purple via-blck-darkPurple to-blck-card opacity-70"></div>
         
-        <div className="container mx-auto px-4 z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            <div>
-              <h1 
-                className="text-4xl md:text-6xl font-heading font-bold text-blck-silver mb-4 animate-fade-in"
-              >
-                Discover Your <span className="text-blck-gold">Signature</span> Scent
+        {/* Subtle animated particles or shapes could be added here in a real implementation */}
+        
+        <div className="container mx-auto px-4 z-10 text-center max-w-4xl">
+          <div className="space-y-8">
+            {/* Main heading with animated reveal */}
+            <div className="mb-6">
+              <h1 className="text-5xl md:text-7xl font-heading font-bold mb-2">
+                <div className="text-reveal">
+                  <span className="block letter-spacing-animation animation-delay-200">Discover</span>
+                </div>
+                <div className="text-reveal">
+                  <span className="block letter-spacing-animation animation-delay-400">Your</span>
+                </div>
+                <div className="text-reveal">
+                  <span className="block gradient-text animation-delay-600">Signature</span>
+                </div>
+                <div className="text-reveal">
+                  <span className="block glow-text animation-delay-800">Scent</span>
+                </div>
               </h1>
-              
-              <p 
-                className="text-lg text-blck-textMuted mb-8 max-w-xl animate-fade-in animation-delay-200"
-              >
-                Immerse yourself in the world of Imperial Perfumes, where timeless elegance meets modern luxury. Crafted with the finest ingredients from around the world.
-              </p>
-              
-              <div 
-                className="flex flex-wrap gap-4 animate-fade-in animation-delay-400"
-              >
-                <Button variant="blck" size="lg" asChild>
-                  <Link href="/products">Explore Collection</Link>
-                </Button>
-                <Button variant="blckOutline" size="lg" asChild>
-                  <Link href="/about">Our Story</Link>
-                </Button>
-              </div>
             </div>
             
-            <div className="hidden lg:block">
-              <div className="relative w-full h-[500px] animate-fade-in">
-                <Image
-                  src="/images/bottle in purple.png"
-                  alt="Luxury perfume bottle"
-                  fill
-                  className="object-contain"
-                />
-              </div>
+            <p className="text-xl text-blck-textMuted mb-8 max-w-2xl mx-auto slide-in-blur animation-delay-800">
+              Immerse yourself in the world of Imperial Perfumes, where timeless elegance meets modern luxury. Crafted with the finest ingredients from around the world.
+            </p>
+            
+            <div className="flex flex-wrap gap-4 justify-center animate-fade-in animation-delay-800">
+              <Button variant="blck" size="lg" asChild>
+                <Link href="/collections">Explore Collection</Link>
+              </Button>
+              <Button variant="blckOutline" size="lg" asChild>
+                <Link href="/about">Our Story</Link>
+              </Button>
             </div>
           </div>
         </div>
@@ -83,7 +72,7 @@ export default function Home() {
                 <h3 className="font-heading text-xl font-semibold mb-2 text-blck-silver">Imperial Elixir Noir</h3>
                 <p className="text-blck-textMuted mb-4">A captivating blend of exotic notes that transport you to distant lands.</p>
                 <div className="flex justify-between items-center">
-                  <span className="text-lg font-medium text-blck-gold">$199.00</span>
+                  <span className="text-lg font-medium text-blck-gold">₹199.00</span>
                   <Button variant="blck" size="sm" asChild>
                     <Link href="/products/1">View Details</Link>
                   </Button>
@@ -104,7 +93,7 @@ export default function Home() {
                 <h3 className="font-heading text-xl font-semibold mb-2 text-blck-silver">Royal Amber</h3>
                 <p className="text-blck-textMuted mb-4">A rich and warm fragrance with notes of amber, vanilla, and sandalwood.</p>
                 <div className="flex justify-between items-center">
-                  <span className="text-lg font-medium text-blck-gold">$229.00</span>
+                  <span className="text-lg font-medium text-blck-gold">₹229.00</span>
                   <Button variant="blck" size="sm" asChild>
                     <Link href="/products/2">View Details</Link>
                   </Button>
@@ -118,16 +107,16 @@ export default function Home() {
                   src="/images/imperial rogue.png"
                   alt="Imperial Rogue"
                   fill
-                  className="object-cover object-center"
+                  className="object-cover"
                 />
               </div>
               <div className="p-6">
                 <h3 className="font-heading text-xl font-semibold mb-2 text-blck-silver">Imperial Rogue</h3>
                 <p className="text-blck-textMuted mb-4">A bold and daring fragrance with notes of leather, spice, and dark woods.</p>
                 <div className="flex justify-between items-center">
-                  <span className="text-lg font-medium text-blck-gold">$249.00</span>
+                  <span className="text-lg font-medium text-blck-gold">₹249.00</span>
                   <Button variant="blck" size="sm" asChild>
-                    <Link href="/products/3">View Details</Link>
+                    <Link href="/collections">View Details</Link>
                   </Button>
                 </div>
               </div>
@@ -136,7 +125,7 @@ export default function Home() {
           
           <div className="text-center mt-12">
             <Button variant="blckOutline" size="lg" asChild>
-              <Link href="/products">View All Collections</Link>
+              <Link href="/shop">View All Collections</Link>
             </Button>
           </div>
         </div>

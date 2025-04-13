@@ -2,16 +2,13 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { useCart } from '@/context/CartContext'
-import { useTheme } from '@/context/ThemeContext'
-import { ShoppingBag, Menu, X, Sun, Moon, Search, User } from 'lucide-react'
+import { ShoppingBag, Menu, X, Search, User } from 'lucide-react'
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const { totalItems } = useCart()
-  const { theme, setTheme } = useTheme()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,10 +23,6 @@ const Header = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
   }
 
-  const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light')
-  }
-
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -40,22 +33,11 @@ const Header = () => {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="relative z-10 text-2xl font-heading font-bold text-blck-silver">
-            <div
-              className="flex items-center opacity-0 animate-fade-in"
-            >
-              <Image 
-                src={isScrolled ? "/images/logo (2).png" : "/images/logo-white.png"} 
-                alt="Imperial Perfumes" 
-                width={40} 
-                height={40}
-                className="mr-2"
-              />
-              <span className="font-heading text-xl md:text-2xl font-bold text-blck-silver">
-                Imperial <span className="font-medium text-blck-gold">Perfumes</span>
-              </span>
-            </div>
+          {/* Logo Text */}
+          <Link href="/" className="relative z-10">
+            <span className="font-heading text-xl md:text-2xl font-bold text-blck-silver">
+              Imperial <span className="font-medium text-blck-gold">Perfumes</span>
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -66,7 +48,7 @@ const Header = () => {
             <Link href="/collections" className="nav-link font-medium text-blck-silver hover:text-white transition-colors">
               Collections
             </Link>
-            <Link href="/products" className="nav-link font-medium text-blck-silver hover:text-white transition-colors">
+            <Link href="/shop" className="nav-link font-medium text-blck-silver hover:text-white transition-colors">
               Shop
             </Link>
             <Link href="/about" className="nav-link font-medium text-blck-silver hover:text-white transition-colors">
@@ -79,14 +61,6 @@ const Header = () => {
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center space-x-4">
-            <button 
-              onClick={toggleTheme}
-              className="p-2 rounded-full hover:bg-blck-lightOrange transition-colors text-blck-silver hover:text-white"
-              aria-label="Toggle theme"
-            >
-              {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
-            </button>
-            
             <Link href="/search" className="p-2 rounded-full hover:bg-blck-lightOrange transition-colors text-blck-silver hover:text-white">
               <Search size={20} />
             </Link>
@@ -149,7 +123,7 @@ const Header = () => {
                 Collections
               </Link>
               <Link 
-                href="/products" 
+                href="/shop" 
                 className="py-2 font-medium text-blck-silver hover:text-white transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
@@ -172,14 +146,6 @@ const Header = () => {
             </nav>
             
             <div className="flex items-center space-x-4 mt-4 pt-4 border-t border-blck-cardLight">
-              <button 
-                onClick={toggleTheme}
-                className="p-2 rounded-full hover:bg-blck-lightOrange transition-colors text-blck-silver hover:text-white"
-                aria-label="Toggle theme"
-              >
-                {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
-              </button>
-              
               <Link 
                 href="/search" 
                 className="p-2 rounded-full hover:bg-blck-lightOrange transition-colors text-blck-silver hover:text-white"

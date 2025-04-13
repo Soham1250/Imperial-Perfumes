@@ -2,127 +2,138 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import Image from 'next/image'
 
-// Sample perfume data
-const perfumes = [
+// Themed collections data
+const collections = [
   {
-    id: 1,
-    name: "Imperial Perfume 1",
-    description: "A captivating blend of exotic notes that transport you to distant lands.",
-    price: 199,
-    image: "/images/perfume-1.jpg"
+    id: "office",
+    name: "Office Collection",
+    description: "Professional fragrances that make a subtle yet powerful impression in the workplace.",
+    image: "/images/imperial rogue.png",
+    perfumeCount: 8,
+    notes: "Subtle woods, light citrus, and clean musk"
   },
   {
-    id: 2,
-    name: "Imperial Perfume 2",
-    description: "A rich and warm fragrance with notes of amber, vanilla, and sandalwood.",
-    price: 229,
-    image: "/images/bottle in purple.png"
+    id: "beach",
+    name: "Beach Collection",
+    description: "Fresh, aquatic scents perfect for sunny days and ocean breezes.",
+    image: "/images/bottle in purple.png",
+    perfumeCount: 6,
+    notes: "Marine accords, coconut, and fresh citrus"
   },
   {
-    id: 3,
-    name: "Imperial Perfume 3",
-    description: "A bold and daring fragrance with notes of leather, spice, and dark woods.",
-    price: 249,
-    image: "/images/imperial rogue.png"
+    id: "travel",
+    name: "Travel Collection",
+    description: "Portable and long-lasting fragrances for your journeys around the world.",
+    image: "/images/perfume bottle collection blue bg.jpg",
+    perfumeCount: 7,
+    notes: "Exotic spices, amber, and aromatic herbs"
   },
   {
-    id: 4,
-    name: "Imperial Perfume 4",
-    description: "An enchanting floral fragrance with notes of orchid, jasmine, and musk.",
-    price: 189,
-    image: "/images/perfume-3.jpg"
+    id: "gym",
+    name: "Gym Collection",
+    description: "Energizing and refreshing scents that stay pleasant through your workout.",
+    image: "/images/perfume bottle red.jpg",
+    perfumeCount: 5,
+    notes: "Mint, citrus, and light woods"
   },
   {
-    id: 5,
-    name: "Imperial Perfume 5",
-    description: "A fresh and invigorating scent with citrus and marine accords.",
-    price: 179,
-    image: "/images/perfume-1.jpg"
+    id: "party",
+    name: "Party Collection",
+    description: "Bold, attention-grabbing fragrances for nights out and special occasions.",
+    image: "/images/entire collection.png",
+    perfumeCount: 9,
+    notes: "Rich oud, sweet vanilla, and exotic florals"
   },
   {
-    id: 6,
-    name: "Imperial Perfume 6",
-    description: "A sophisticated blend of rose, patchouli, and bergamot.",
-    price: 219,
-    image: "/images/bottle in purple.png"
-  },
-  {
-    id: 7,
-    name: "Imperial Perfume 7",
-    description: "An oriental fragrance with notes of oud, saffron, and amber.",
-    price: 259,
-    image: "/images/imperial rogue.png"
-  },
-  {
-    id: 8,
-    name: "Imperial Perfume 8",
-    description: "A light and airy fragrance with notes of white flowers and citrus.",
-    price: 169,
-    image: "/images/perfume-3.jpg"
-  },
-  {
-    id: 9,
-    name: "Imperial Perfume 9",
-    description: "A woody fragrance with notes of cedar, vetiver, and bergamot.",
-    price: 209,
-    image: "/images/perfume-1.jpg"
-  },
-  {
-    id: 10,
-    name: "Imperial Perfume 10",
-    description: "A luxurious blend of rare spices, amber, and vanilla.",
-    price: 279,
-    image: "/images/bottle in purple.png"
+    id: "date",
+    name: "Date Collection",
+    description: "Romantic and seductive scents designed to leave a lasting impression.",
+    image: "/images/perfume-hero.jpg",
+    perfumeCount: 7,
+    notes: "Warm amber, sensual musk, and delicate florals"
   }
 ];
 
 export default function CollectionsPage() {
   return (
-    <div className="min-h-screen bg-blck-purple pt-24 pb-16">
+    <div className="min-h-screen bg-blck-darkPurple pt-24 pb-16">
       <div className="container mx-auto px-4">
         {/* Page Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-heading font-bold text-blck-silver mb-4">Our Collections</h1>
+        <div className="text-center mb-12 fade-in">
+          <h1 className="text-4xl md:text-5xl font-heading font-bold text-blck-silver mb-4">Curated Collections</h1>
           <p className="text-blck-textMuted max-w-2xl mx-auto">
-            Explore our exquisite range of premium fragrances, each crafted to evoke unique emotions and memories.
+            Discover our carefully curated collections designed for every occasion and lifestyle.
+            Each collection features perfumes selected specifically for their perfect fit with the setting.
           </p>
         </div>
         
-        {/* Filters */}
-        <div className="flex flex-wrap gap-4 justify-center mb-10">
-          <Button variant="blck" size="sm">All</Button>
-          <Button variant="blckOutline" size="sm">For Him</Button>
-          <Button variant="blckOutline" size="sm">For Her</Button>
-          <Button variant="blckOutline" size="sm">Unisex</Button>
-          <Button variant="blckOutline" size="sm">Limited Edition</Button>
-        </div>
-        
-        {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {perfumes.map((perfume) => (
-            <div key={perfume.id} className="blck-card overflow-hidden group">
-              <div className="relative h-80">
-                <Image
-                  src={perfume.image}
-                  alt={perfume.name}
-                  fill
-                  className={`transition-all duration-500 group-hover:scale-105 ${
-                    perfume.image.includes('bottle') ? 'object-contain bg-blck-cardLight' : 'object-cover'
-                  }`}
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="font-heading text-xl font-semibold mb-2 text-blck-silver">{perfume.name}</h3>
-                <p className="text-blck-textMuted mb-4 line-clamp-2">{perfume.description}</p>
-                <div className="flex justify-between items-center">
-                  <span className="text-lg font-medium text-blck-gold">${perfume.price}.00</span>
-                  <Button variant="blck" size="sm" asChild>
-                    <Link href={`/collections/${perfume.id}`}>View Details</Link>
-                  </Button>
+        {/* Collections Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {collections.map((collection, index) => (
+            <div
+              key={collection.id}
+              className="fade-in"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <Link href={`/shop?collection=${collection.id}`} className="block">
+                <div className="blck-card overflow-hidden group cursor-pointer transition-all duration-300 hover:shadow-lg hover:shadow-blck-accent/10 relative">
+                  <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blck-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
+                  <div className="relative h-72">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10" />
+                    <Image
+                      src={collection.image}
+                      alt={collection.name}
+                      fill
+                      className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-1"
+                    />
+                    <div className="absolute top-4 right-4 z-20">
+                      <span className="bg-blck-accent/90 text-white text-xs px-3 py-1 rounded-full shadow-sm">
+                        {collection.perfumeCount} Perfumes
+                      </span>
+                    </div>
+                    <div className="absolute bottom-0 left-0 w-full p-6 z-20">
+                      <h3 className="text-2xl font-serif font-medium mb-1 text-white group-hover:text-blck-gold transition-colors duration-300 drop-shadow-md">
+                        {collection.name}
+                      </h3>
+                    </div>
+                  </div>
+                  <div className="p-6 relative">
+                    <p className="text-blck-textMuted mb-5">{collection.description}</p>
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <p className="text-sm text-blck-textMuted">Featured Notes:</p>
+                        <p className="text-blck-silver text-sm font-medium">{collection.notes}</p>
+                      </div>
+                      <Button variant="blck" size="sm" className="group-hover:bg-blck-accent group-hover:scale-105 transition-all duration-300">
+                        <span className="mr-2">Explore</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transform group-hover:translate-x-1 transition-transform duration-300">
+                          <path d="M5 12h14"></path>
+                          <path d="m12 5 7 7-7 7"></path>
+                        </svg>
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blck-accent to-blck-gold opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 </div>
-              </div>
+              </Link>
             </div>
           ))}
+        </div>
+        
+        {/* Additional Info */}
+        <div className="mt-16 text-center fade-in" style={{ animationDelay: "0.8s" }}>
+          <h2 className="text-2xl font-heading font-semibold text-blck-silver mb-4">Can't Decide?</h2>
+          <p className="text-blck-textMuted max-w-2xl mx-auto mb-8">
+            Visit our shop to browse all our fragrances or contact our fragrance consultants for personalized recommendations.
+          </p>
+          <div className="flex flex-wrap gap-4 justify-center">
+            <Button variant="blck" size="lg" asChild>
+              <Link href="/shop">Browse All Perfumes</Link>
+            </Button>
+            <Button variant="blckOutline" size="lg" asChild>
+              <Link href="/membership">Get Expert Advice</Link>
+            </Button>
+          </div>
         </div>
       </div>
     </div>

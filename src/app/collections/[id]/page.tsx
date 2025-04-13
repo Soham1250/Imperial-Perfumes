@@ -1,7 +1,12 @@
+'use client'
+
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
+import { useCart } from '@/context/CartContext'
+import { toast } from 'react-hot-toast'
 
 // Sample perfume data (same as in collections page)
 const perfumes = [
@@ -10,7 +15,7 @@ const perfumes = [
     name: "Imperial Perfume 1",
     description: "A captivating blend of exotic notes that transport you to distant lands.",
     price: 199,
-    image: "/images/perfume-1.jpg",
+    image: "/images/imperial rogue.png",
     details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl.",
     notes: {
       top: ["Bergamot", "Lemon", "Black Pepper"],
@@ -28,7 +33,7 @@ const perfumes = [
     name: "Imperial Perfume 2",
     description: "A rich and warm fragrance with notes of amber, vanilla, and sandalwood.",
     price: 229,
-    image: "/images/bottle in purple.png",
+    image: "/images/imperial rogue.png",
     details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl.",
     notes: {
       top: ["Bergamot", "Cardamom", "Pink Pepper"],
@@ -64,16 +69,16 @@ const perfumes = [
     name: "Imperial Perfume 4",
     description: "An enchanting floral fragrance with notes of orchid, jasmine, and musk.",
     price: 189,
-    image: "/images/perfume-3.jpg",
+    image: "/images/imperial rogue.png",
     details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl.",
     notes: {
-      top: ["Bergamot", "Peach", "Green Notes"],
-      middle: ["Orchid", "Jasmine", "Rose"],
+      top: ["Bergamot", "Pink Pepper", "Pear"],
+      middle: ["Orchid", "Jasmine", "Lily of the Valley"],
       base: ["Musk", "Vanilla", "Amber"]
     },
     reviews: [
-      { source: "Instagram", author: "@florallover", text: "The most beautiful floral fragrance I've ever owned. It's like walking through a garden in full bloom.", rating: 5 },
-      { source: "Facebook", author: "Emma S.", text: "Delicate yet long-lasting. I receive compliments all day when I wear this.", rating: 4 },
+      { source: "Instagram", author: "@perfumeaddict", text: "The most beautiful floral I've ever worn. Delicate yet long-lasting.", rating: 5 },
+      { source: "Facebook", author: "Emily S.", text: "I receive so many compliments when I wear this. It's become my signature scent.", rating: 5 },
       { source: "Website", author: "Thomas K.", text: "Bought this for my wife and she absolutely loves it. A truly elegant scent.", rating: 5 }
     ]
   },
@@ -82,16 +87,16 @@ const perfumes = [
     name: "Imperial Perfume 5",
     description: "A fresh and invigorating scent with citrus and marine accords.",
     price: 179,
-    image: "/images/perfume-1.jpg",
+    image: "/images/imperial rogue.png",
     details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl.",
     notes: {
-      top: ["Lemon", "Grapefruit", "Bergamot"],
-      middle: ["Marine Notes", "Jasmine", "Rosemary"],
-      base: ["Musk", "Cedarwood", "Ambergris"]
+      top: ["Lemon", "Bergamot", "Grapefruit"],
+      middle: ["Marine Accord", "Jasmine", "Rosemary"],
+      base: ["Musk", "Cedar", "Amber"]
     },
     reviews: [
-      { source: "Instagram", author: "@summerfragrance", text: "The perfect summer scent! Fresh, clean, and so uplifting.", rating: 5 },
-      { source: "Facebook", author: "James L.", text: "Great for everyday wear. Not overpowering but still noticeable.", rating: 4 },
+      { source: "Instagram", author: "@summerscents", text: "Perfect for hot days. Fresh, clean, and energizing without being overpowering.", rating: 5 },
+      { source: "Facebook", author: "Mark L.", text: "My go-to for the office. Professional and refreshing.", rating: 4 },
       { source: "Website", author: "Olivia R.", text: "My go-to for hot days. The marine notes are so realistic and refreshing.", rating: 4 }
     ]
   },
@@ -100,16 +105,16 @@ const perfumes = [
     name: "Imperial Perfume 6",
     description: "A sophisticated blend of rose, patchouli, and bergamot.",
     price: 219,
-    image: "/images/bottle in purple.png",
+    image: "/images/imperial rogue.png",
     details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl.",
     notes: {
       top: ["Bergamot", "Mandarin", "Pink Pepper"],
-      middle: ["Rose", "Geranium", "Lily of the Valley"],
-      base: ["Patchouli", "Oakmoss", "Amber"]
+      middle: ["Rose", "Geranium", "Lily"],
+      base: ["Patchouli", "Sandalwood", "Amber"]
     },
     reviews: [
-      { source: "Instagram", author: "@rosefanatic", text: "The most realistic rose fragrance I've ever tried. It's like carrying a bouquet with you.", rating: 5 },
-      { source: "Facebook", author: "Catherine D.", text: "Elegant and timeless. Perfect for both day and evening wear.", rating: 5 },
+      { source: "Instagram", author: "@rosefanatic", text: "The most realistic and beautiful rose fragrance I've ever encountered.", rating: 5 },
+      { source: "Facebook", author: "Catherine D.", text: "Elegant, timeless, and perfect for any occasion. My absolute favorite.", rating: 5 },
       { source: "Website", author: "William J.", text: "Bought this for my mother and she adores it. A true classic.", rating: 4 }
     ]
   },
@@ -122,12 +127,12 @@ const perfumes = [
     details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl.",
     notes: {
       top: ["Saffron", "Cinnamon", "Cardamom"],
-      middle: ["Oud", "Rose", "Leather"],
+      middle: ["Oud", "Rose", "Incense"],
       base: ["Amber", "Vanilla", "Sandalwood"]
     },
     reviews: [
-      { source: "Instagram", author: "@oudlover", text: "The oud in this is phenomenal. Rich, complex, and so luxurious.", rating: 5 },
-      { source: "Facebook", author: "Amir H.", text: "Reminds me of the finest fragrances from the Middle East. A true masterpiece.", rating: 5 },
+      { source: "Instagram", author: "@oudlover", text: "The most authentic oud fragrance available outside the Middle East. Incredible quality.", rating: 5 },
+      { source: "Facebook", author: "Hassan M.", text: "Reminds me of the finest fragrances from my homeland. Excellent longevity and projection.", rating: 5 },
       { source: "Website", author: "Sophia K.", text: "Worth every penny. The longevity is incredible and the scent evolution is fascinating.", rating: 4 }
     ]
   },
@@ -136,16 +141,16 @@ const perfumes = [
     name: "Imperial Perfume 8",
     description: "A light and airy fragrance with notes of white flowers and citrus.",
     price: 169,
-    image: "/images/perfume-3.jpg",
+    image: "/images/imperial rogue.png",
     details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl.",
     notes: {
-      top: ["Lemon", "Bergamot", "Neroli"],
-      middle: ["Jasmine", "Orange Blossom", "Lily"],
+      top: ["Bergamot", "Lemon", "Neroli"],
+      middle: ["Orange Blossom", "Jasmine", "Lily of the Valley"],
       base: ["White Musk", "Cedarwood", "Amber"]
     },
     reviews: [
-      { source: "Instagram", author: "@springscents", text: "So delicate and beautiful. Like a breath of fresh air.", rating: 4 },
-      { source: "Facebook", author: "Laura M.", text: "My everyday signature scent. Clean, fresh, and elegant.", rating: 5 },
+      { source: "Instagram", author: "@springscents", text: "Like walking through a garden in full bloom. So beautiful and uplifting.", rating: 5 },
+      { source: "Facebook", author: "Laura B.", text: "The perfect everyday scent. Light enough for the office but still unique and noticeable.", rating: 4 },
       { source: "Website", author: "Daniel P.", text: "Bought this for my girlfriend and she wears it every day now. Light but distinctive.", rating: 4 }
     ]
   },
@@ -154,16 +159,16 @@ const perfumes = [
     name: "Imperial Perfume 9",
     description: "A woody fragrance with notes of cedar, vetiver, and bergamot.",
     price: 209,
-    image: "/images/perfume-1.jpg",
+    image: "/images/imperial rogue.png",
     details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl.",
     notes: {
-      top: ["Bergamot", "Grapefruit", "Pepper"],
-      middle: ["Cedar", "Cypress", "Pine"],
+      top: ["Bergamot", "Elemi", "Cardamom"],
+      middle: ["Cedar", "Cypress", "Geranium"],
       base: ["Vetiver", "Patchouli", "Amber"]
     },
     reviews: [
-      { source: "Instagram", author: "@woodyfragrance", text: "Like walking through a forest after rain. So natural and grounding.", rating: 5 },
-      { source: "Facebook", author: "Mark T.", text: "A sophisticated woody scent that's perfect for the office.", rating: 4 },
+      { source: "Instagram", author: "@woodyfragrance", text: "The cedar note is so realistic. Like walking through a forest after rain.", rating: 5 },
+      { source: "Facebook", author: "James H.", text: "Sophisticated and masculine without being overpowering. Perfect for the office.", rating: 4 },
       { source: "Website", author: "Rachel B.", text: "I love woody fragrances and this is one of the best I've tried.", rating: 5 }
     ]
   },
@@ -172,23 +177,23 @@ const perfumes = [
     name: "Imperial Perfume 10",
     description: "A luxurious blend of rare spices, amber, and vanilla.",
     price: 279,
-    image: "/images/bottle in purple.png",
+    image: "/images/imperial rogue.png",
     details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl.",
     notes: {
-      top: ["Cardamom", "Cinnamon", "Nutmeg"],
-      middle: ["Amber", "Vanilla", "Tonka Bean"],
-      base: ["Sandalwood", "Musk", "Benzoin"]
+      top: ["Saffron", "Cardamom", "Cinnamon"],
+      middle: ["Amber", "Myrrh", "Rose"],
+      base: ["Vanilla", "Oud", "Sandalwood"]
     },
     reviews: [
-      { source: "Instagram", author: "@luxuryscents", text: "The most luxurious fragrance in my collection. Worth every penny.", rating: 5 },
-      { source: "Facebook", author: "Victoria S.", text: "Opulent, rich, and so unique. I get stopped and asked what I'm wearing.", rating: 5 },
+      { source: "Instagram", author: "@luxuryscents", text: "Worth every penny. The most luxurious and complex fragrance in my collection.", rating: 5 },
+      { source: "Facebook", author: "Elizabeth C.", text: "Bought this for a special occasion and now I can't stop wearing it. Absolutely divine.", rating: 5 },
       { source: "Website", author: "Jonathan K.", text: "A special occasion fragrance that makes you feel like royalty.", rating: 5 }
     ]
   }
 ];
 
 // Function to generate star rating display
-const StarRating = ({ rating }: { rating: number }) => {
+function StarRating({ rating }: { rating: number }) {
   return (
     <div className="flex">
       {[...Array(5)].map((_, i) => (
@@ -208,17 +213,57 @@ const StarRating = ({ rating }: { rating: number }) => {
 };
 
 export default function PerfumeDetailPage({ params }: { params: { id: string } }) {
-  const perfumeId = parseInt(params.id);
-  const perfume = perfumes.find(p => p.id === perfumeId);
+  const perfumeId = parseInt(params.id)
+  const perfume = perfumes.find(p => p.id === perfumeId)
+  
+  const { addItem } = useCart()
+  const [selectedSize, setSelectedSize] = useState<string | null>(null)
+  const [isAddingToCart, setIsAddingToCart] = useState(false)
+  
+  // Available sizes
+  const sizes = [
+    { size: "30ml", priceMultiplier: 1 },
+    { size: "60ml", priceMultiplier: 1.8 },
+    { size: "100ml", priceMultiplier: 2.5 }
+  ]
   
   if (!perfume) {
-    notFound();
+    notFound()
+  }
+  
+  const handleAddToCart = () => {
+    setIsAddingToCart(true)
+    
+    // If no size is selected, use the default size
+    const size = selectedSize || sizes[0].size
+    
+    // Find the price multiplier for the selected size
+    const sizeOption = sizes.find(s => s.size === size)
+    const price = sizeOption ? Math.round(perfume.price * sizeOption.priceMultiplier) : perfume.price
+    
+    // Add the item to the cart
+    addItem({
+      id: perfume.id.toString(),
+      name: perfume.name,
+      price: price,
+      image: perfume.image,
+      quantity: 1,
+      size: size
+    })
+    
+    // Show success notification
+    toast.success(`${perfume.name} (${size}) added to cart`)
+    
+    // Reset the loading state
+    setTimeout(() => {
+      setIsAddingToCart(false)
+    }, 500)
   }
   
   return (
-    <div className="min-h-screen bg-blck-purple pt-24 pb-16">
+    <div className="min-h-screen bg-blck-darkPurple pt-24 pb-16">
       <div className="container mx-auto px-4">
-        {/* Breadcrumb Navigation */}
+        {/* Breadcrumb */}
         <div className="mb-8">
           <nav className="flex text-sm">
             <Link href="/" className="text-blck-textMuted hover:text-blck-silver">Home</Link>
@@ -230,38 +275,61 @@ export default function PerfumeDetailPage({ params }: { params: { id: string } }
         </div>
         
         {/* Product Details */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
           {/* Product Image */}
-          <div className="relative h-[500px] blck-card rounded-2xl overflow-hidden">
+          <div className="relative h-[500px] md:h-[600px] rounded-lg overflow-hidden blck-card">
             <Image
               src={perfume.image}
               alt={perfume.name}
               fill
               className={`${
-                perfume.image.includes('bottle') ? 'object-contain bg-blck-cardLight p-8' : 'object-cover'
+                perfume.image.includes('bottle') ? 'object-contain bg-blck-cardLight' : 'object-cover'
               }`}
-              sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>
           
           {/* Product Info */}
           <div>
-            <h1 className="text-3xl md:text-4xl font-heading font-bold text-blck-silver mb-2">{perfume.name}</h1>
-            <div className="flex items-center space-x-2 mb-4">
+            <h1 className="text-3xl md:text-4xl font-heading font-bold text-blck-silver mb-3">{perfume.name}</h1>
+            <div className="flex items-center mb-4">
               <StarRating rating={5} />
               <span className="text-blck-textMuted">(12 reviews)</span>
             </div>
             
-            <p className="text-2xl font-medium text-blck-gold mb-6">${perfume.price}.00</p>
+            <p className="text-2xl font-medium text-blck-gold mb-6">₹{perfume.price}.00</p>
             
             <div className="mb-6">
               <h2 className="text-xl font-heading font-semibold text-blck-silver mb-2">Description</h2>
-              <p className="text-blck-textMuted mb-4">{perfume.description}</p>
-              <p className="text-blck-textMuted">{perfume.details}</p>
+              <p className="text-blck-textMuted">{perfume.description}</p>
             </div>
             
-            <div className="mb-6">
-              <h2 className="text-xl font-heading font-semibold text-blck-silver mb-2">Fragrance Notes</h2>
+            <div className="mb-8">
+              <h2 className="text-xl font-heading font-semibold text-blck-silver mb-4">Select Size</h2>
+              <div className="flex space-x-4 mb-4">
+                {sizes.map((sizeOption) => (
+                  <button
+                    key={sizeOption.size}
+                    onClick={() => setSelectedSize(sizeOption.size)}
+                    className={`px-4 py-2 rounded-md border transition-all ${
+                      selectedSize === sizeOption.size
+                        ? 'border-blck-gold bg-blck-accent/20 text-blck-gold'
+                        : 'border-blck-purple bg-blck-purple/30 text-blck-textMuted hover:border-blck-silver'
+                    }`}
+                  >
+                    {sizeOption.size}
+                    <span className="block text-xs mt-1">
+                      ₹{Math.round(perfume.price * sizeOption.priceMultiplier)}.00
+                    </span>
+                  </button>
+                ))}
+              </div>
+              <p className="text-sm text-blck-textMuted">
+                {selectedSize ? `Selected: ${selectedSize}` : 'Select a size'}
+              </p>
+            </div>
+            
+            <div className="mb-8">
+              <h2 className="text-xl font-heading font-semibold text-blck-silver mb-4">Fragrance Notes</h2>
               <div className="grid grid-cols-3 gap-4">
                 <div className="blck-card p-4">
                   <h3 className="font-medium text-blck-silver mb-2">Top Notes</h3>
@@ -292,78 +360,74 @@ export default function PerfumeDetailPage({ params }: { params: { id: string } }
             
             <div className="flex space-x-4 mb-8">
               <div className="w-full">
-                <Button variant="blck" size="lg" className="w-full">
-                  Buy Now
-                </Button>
+                <Link href="/checkout">
+                  <Button variant="blck" size="lg" className="w-full">
+                    Buy Now
+                  </Button>
+                </Link>
               </div>
-              <Button variant="blckOutline" size="lg">
-                Add to Cart
+              <Button 
+                variant="blckOutline" 
+                size="lg" 
+                onClick={handleAddToCart}
+                disabled={isAddingToCart}
+              >
+                {isAddingToCart ? 'Adding...' : 'Add to Cart'}
               </Button>
             </div>
             
-            <div className="grid grid-cols-2 gap-4 text-center">
-              <div className="blck-card p-4">
-                <p className="text-blck-silver">Free Shipping</p>
-                <p className="text-sm text-blck-textMuted">On orders over $100</p>
-              </div>
-              <div className="blck-card p-4">
-                <p className="text-blck-silver">Secure Payment</p>
-                <p className="text-sm text-blck-textMuted">100% secure payment</p>
+            {/* Reviews Section */}
+            <div className="mt-16">
+              <h2 className="text-2xl font-heading font-bold text-blck-silver mb-6">Customer Reviews</h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {perfume.reviews.map((review, index) => (
+                  <div key={index} className="blck-card p-6">
+                    <div className="flex justify-between items-start mb-4">
+                      <div>
+                        <h3 className="font-medium text-blck-silver">{review.author}</h3>
+                        <p className="text-sm text-blck-textMuted">via {review.source}</p>
+                      </div>
+                      <StarRating rating={review.rating} />
+                    </div>
+                    <p className="text-blck-textMuted">{review.text}</p>
+                  </div>
+                ))}
               </div>
             </div>
-          </div>
-        </div>
-        
-        {/* Reviews Section */}
-        <div className="mt-16">
-          <h2 className="text-2xl font-heading font-bold text-blck-silver mb-6">Customer Reviews</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {perfume.reviews.map((review, index) => (
-              <div key={index} className="blck-card p-6">
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <h3 className="font-medium text-blck-silver">{review.author}</h3>
-                    <p className="text-sm text-blck-textMuted">via {review.source}</p>
-                  </div>
-                  <StarRating rating={review.rating} />
-                </div>
-                <p className="text-blck-textMuted">{review.text}</p>
+            
+            {/* Related Products */}
+            <div className="mt-16">
+              <h2 className="text-2xl font-heading font-bold text-blck-silver mb-6">You May Also Like</h2>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {perfumes
+                  .filter(p => p.id !== perfume.id)
+                  .slice(0, 4)
+                  .map(relatedPerfume => (
+                    <div key={relatedPerfume.id} className="blck-card overflow-hidden group">
+                      <div className="relative h-60">
+                        <Image
+                          src={relatedPerfume.image}
+                          alt={relatedPerfume.name}
+                          fill
+                          className={`transition-all duration-500 group-hover:scale-105 ${
+                            relatedPerfume.image.includes('bottle') ? 'object-contain bg-blck-cardLight' : 'object-cover'
+                          }`}
+                        />
+                      </div>
+                      <div className="p-4">
+                        <h3 className="font-heading text-lg font-semibold mb-1 text-blck-silver">{relatedPerfume.name}</h3>
+                        <p className="text-blck-gold mb-2">₹{relatedPerfume.price}.00</p>
+                        <Button variant="blck" size="sm" asChild className="w-full">
+                          <Link href={`/collections/${relatedPerfume.id}`}>View Details</Link>
+                        </Button>
+                      </div>
+                    </div>
+                  ))
+                }
               </div>
-            ))}
-          </div>
-        </div>
-        
-        {/* Related Products */}
-        <div className="mt-16">
-          <h2 className="text-2xl font-heading font-bold text-blck-silver mb-6">You May Also Like</h2>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {perfumes
-              .filter(p => p.id !== perfume.id)
-              .slice(0, 4)
-              .map(relatedPerfume => (
-                <div key={relatedPerfume.id} className="blck-card overflow-hidden group">
-                  <div className="relative h-60">
-                    <Image
-                      src={relatedPerfume.image}
-                      alt={relatedPerfume.name}
-                      fill
-                      className={`transition-all duration-500 group-hover:scale-105 ${
-                        relatedPerfume.image.includes('bottle') ? 'object-contain bg-blck-cardLight' : 'object-cover'
-                      }`}
-                    />
-                  </div>
-                  <div className="p-4">
-                    <h3 className="font-heading text-lg font-semibold mb-1 text-blck-silver">{relatedPerfume.name}</h3>
-                    <p className="text-blck-gold mb-2">${relatedPerfume.price}.00</p>
-                    <Button variant="blck" size="sm" asChild className="w-full">
-                      <Link href={`/collections/${relatedPerfume.id}`}>View Details</Link>
-                    </Button>
-                  </div>
-                </div>
-              ))
-            }
+            </div>
           </div>
         </div>
       </div>
