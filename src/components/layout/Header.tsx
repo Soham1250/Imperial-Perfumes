@@ -5,10 +5,12 @@ import Link from 'next/link'
 import { useCart } from '@/context/CartContext'
 import { ShoppingBag, Menu, X, Search } from 'lucide-react'
 import UserDropdown from '../auth/UserDropdown'
+import SearchModal from '../search/SearchModal'
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
   const { totalItems } = useCart()
 
   useEffect(() => {
@@ -62,9 +64,13 @@ const Header = () => {
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center space-x-4">
-            <Link href="/search" className="p-2 rounded-full hover:bg-blck-lightOrange transition-colors text-blck-silver hover:text-white">
+            <button 
+              onClick={() => setIsSearchOpen(true)}
+              className="p-2 rounded-full hover:bg-blck-lightOrange transition-colors text-blck-silver hover:text-white"
+              aria-label="Search"
+            >
               <Search size={20} />
-            </Link>
+            </button>
             
             <UserDropdown />
             
@@ -145,13 +151,16 @@ const Header = () => {
             </nav>
             
             <div className="flex items-center space-x-4 mt-4 pt-4 border-t border-blck-cardLight">
-              <Link 
-                href="/search" 
+              <button 
+                onClick={() => {
+                  setIsSearchOpen(true);
+                  setIsMobileMenuOpen(false);
+                }}
                 className="p-2 rounded-full hover:bg-blck-lightOrange transition-colors text-blck-silver hover:text-white"
-                onClick={() => setIsMobileMenuOpen(false)}
+                aria-label="Search"
               >
                 <Search size={20} />
-              </Link>
+              </button>
               
               <div onClick={() => setIsMobileMenuOpen(false)}>
                 <UserDropdown />
@@ -160,6 +169,12 @@ const Header = () => {
           </div>
         </div>
       )}
+      
+      {/* Search Modal */}
+      <SearchModal 
+        isOpen={isSearchOpen} 
+        onClose={() => setIsSearchOpen(false)} 
+      />
     </header>
   )
 }

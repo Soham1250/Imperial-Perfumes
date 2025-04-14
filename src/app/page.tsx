@@ -156,7 +156,7 @@ export default function Home() {
                   <h3 className="text-2xl font-heading font-bold text-white mb-2">Azure Collection</h3>
                   <p className="text-blck-silver mb-4">Fresh, aquatic fragrances inspired by the ocean depths</p>
                   <Button variant="blckOutline" size="sm" asChild>
-                    <Link href="/collections/azure">Explore</Link>
+                    <Link href="/collections">Explore</Link>
                   </Button>
                 </div>
               </div>
@@ -176,7 +176,7 @@ export default function Home() {
                   <h3 className="text-2xl font-heading font-bold text-white mb-2">Ruby Collection</h3>
                   <p className="text-blck-silver mb-4">Bold, passionate fragrances with notes of spice and exotic woods</p>
                   <Button variant="blckOutline" size="sm" asChild>
-                    <Link href="/collections/ruby">Explore</Link>
+                    <Link href="/collections">Explore</Link>
                   </Button>
                 </div>
               </div>
@@ -208,7 +208,7 @@ export default function Home() {
               <h3 className="text-3xl font-heading font-bold text-white mb-4">Discover the Full Range</h3>
               <p className="text-blck-silver mb-6 max-w-2xl mx-auto">Our complete collection features over 20 unique fragrances, each crafted to perfection by our master perfumers.</p>
               <Button variant="blck" size="lg" asChild>
-                <Link href="/collections/all">View All Fragrances</Link>
+                <Link href="/shop">View All Fragrances</Link>
               </Button>
             </div>
           </div>

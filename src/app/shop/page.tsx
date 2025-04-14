@@ -130,23 +130,29 @@ const ShopPage = () => {
         {/* Perfume Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {filteredPerfumes.map((perfume) => (
-            <Link href={`/product/${perfume.id}`} key={perfume.id}>
-              <div className="bg-blck-card rounded-lg overflow-hidden hover:shadow-lg hover:shadow-blck-accent/20 transition-all duration-300 h-full flex flex-col">
-                <div className="p-6 flex-grow">
+            <div key={perfume.id} className="bg-blck-card rounded-lg overflow-hidden hover:shadow-lg hover:shadow-blck-accent/20 transition-all duration-300 h-full flex flex-col">
+              <Link href={`/collections/${perfume.id}`} className="p-6 flex-grow">
+                <div>
                   <h3 className="text-xl font-medium mb-2 text-blck-silver">{perfume.name}</h3>
                   <p className="text-gray-400 mb-4 text-sm">{perfume.description}</p>
                   <p className="text-blck-gold font-medium">₹{perfume.price}</p>
                 </div>
-                <div className="px-6 pb-6">
-                  <Button 
-                    className="w-full bg-blck-accent hover:bg-blck-accent/80 text-white"
-                    onClick={(e) => handleAddToCart(e, perfume)}
-                  >
-                    Add to Cart
-                  </Button>
-                </div>
+              </Link>
+              <div className="px-6 pb-6 flex space-x-2">
+                <Button 
+                  className="flex-1 bg-blck-purple hover:bg-blck-purple/80 text-white"
+                  asChild
+                >
+                  <Link href={`/collections/${perfume.id}`}>View Details</Link>
+                </Button>
+                <Button 
+                  className="flex-1 bg-blck-accent hover:bg-blck-accent/80 text-white"
+                  onClick={(e) => handleAddToCart(e, perfume)}
+                >
+                  Add to Cart
+                </Button>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
         

@@ -55,13 +55,13 @@ export default function RegisterForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {error && (
-        <div className="rounded-md bg-red-900/20 p-3 text-sm text-red-400">
+        <div className="rounded-md bg-red-900/30 p-3 text-sm text-red-300 border border-red-800/50">
           {error}
         </div>
       )}
 
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-blck-silver">
+        <label htmlFor="name" className="block text-sm font-medium text-white">
           Full Name
         </label>
         <input
@@ -71,13 +71,13 @@ export default function RegisterForm() {
           required
           value={formData.name}
           onChange={handleChange}
-          className="mt-1 block w-full rounded-md border border-blck-purple bg-blck-purple p-2.5 text-white focus:border-blck-accent focus:outline-none focus:ring-1 focus:ring-blck-accent"
-          placeholder="John Doe"
+          className="mt-1 block w-full rounded-md border border-blck-accent/30 bg-blck-purple/50 p-2.5 text-white placeholder-blck-silver/70 focus:border-blck-accent focus:outline-none focus:ring-1 focus:ring-blck-accent"
+          placeholder="Your Name"
         />
       </div>
 
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-blck-silver">
+        <label htmlFor="email" className="block text-sm font-medium text-white">
           Email
         </label>
         <input
@@ -87,13 +87,13 @@ export default function RegisterForm() {
           required
           value={formData.email}
           onChange={handleChange}
-          className="mt-1 block w-full rounded-md border border-blck-purple bg-blck-purple p-2.5 text-white focus:border-blck-accent focus:outline-none focus:ring-1 focus:ring-blck-accent"
+          className="mt-1 block w-full rounded-md border border-blck-accent/30 bg-blck-purple/50 p-2.5 text-white placeholder-blck-silver/70 focus:border-blck-accent focus:outline-none focus:ring-1 focus:ring-blck-accent"
           placeholder="your@email.com"
         />
       </div>
 
       <div>
-        <label htmlFor="password" className="block text-sm font-medium text-blck-silver">
+        <label htmlFor="password" className="block text-sm font-medium text-white">
           Password
         </label>
         <input
@@ -103,16 +103,16 @@ export default function RegisterForm() {
           required
           value={formData.password}
           onChange={handleChange}
-          className="mt-1 block w-full rounded-md border border-blck-purple bg-blck-purple p-2.5 text-white focus:border-blck-accent focus:outline-none focus:ring-1 focus:ring-blck-accent"
+          className="mt-1 block w-full rounded-md border border-blck-accent/30 bg-blck-purple/50 p-2.5 text-white placeholder-blck-silver/70 focus:border-blck-accent focus:outline-none focus:ring-1 focus:ring-blck-accent"
           placeholder="••••••••"
         />
-        <p className="mt-1 text-xs text-blck-textMuted">
+        <p className="mt-1 text-xs text-blck-silver">
           Must be at least 8 characters
         </p>
       </div>
 
       <div>
-        <label htmlFor="confirmPassword" className="block text-sm font-medium text-blck-silver">
+        <label htmlFor="confirmPassword" className="block text-sm font-medium text-white">
           Confirm Password
         </label>
         <input
@@ -122,7 +122,7 @@ export default function RegisterForm() {
           required
           value={formData.confirmPassword}
           onChange={handleChange}
-          className="mt-1 block w-full rounded-md border border-blck-purple bg-blck-purple p-2.5 text-white focus:border-blck-accent focus:outline-none focus:ring-1 focus:ring-blck-accent"
+          className="mt-1 block w-full rounded-md border border-blck-accent/30 bg-blck-purple/50 p-2.5 text-white placeholder-blck-silver/70 focus:border-blck-accent focus:outline-none focus:ring-1 focus:ring-blck-accent"
           placeholder="••••••••"
         />
       </div>
@@ -133,10 +133,10 @@ export default function RegisterForm() {
           name="terms"
           type="checkbox"
           required
-          className="h-4 w-4 rounded border-blck-purple bg-blck-purple text-blck-accent focus:ring-blck-accent"
+          className="h-4 w-4 rounded border-blck-accent bg-blck-purple/50 text-blck-accent focus:ring-blck-accent"
         />
-        <label htmlFor="terms" className="ml-2 block text-sm text-blck-textMuted">
-          I agree to the Excited to join Imperial Perfumes
+        <label htmlFor="terms" className="ml-2 block text-sm text-blck-silver">
+          I am excited to find my signature scent
         </label>
       </div>
 

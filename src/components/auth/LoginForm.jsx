@@ -40,13 +40,13 @@ export default function LoginForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {error && (
-        <div className="rounded-md bg-red-900/20 p-3 text-sm text-red-400">
+        <div className="rounded-md bg-red-900/30 p-3 text-sm text-red-300 border border-red-800/50">
           {error}
         </div>
       )}
 
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-blck-silver">
+        <label htmlFor="email" className="block text-sm font-medium text-white">
           Email
         </label>
         <input
@@ -56,13 +56,13 @@ export default function LoginForm() {
           required
           value={formData.email}
           onChange={handleChange}
-          className="mt-1 block w-full rounded-md border border-blck-purple bg-blck-purple p-2.5 text-white focus:border-blck-accent focus:outline-none focus:ring-1 focus:ring-blck-accent"
+          className="mt-1 block w-full rounded-md border border-blck-accent/30 bg-blck-purple/50 p-2.5 text-white placeholder-blck-silver/70 focus:border-blck-accent focus:outline-none focus:ring-1 focus:ring-blck-accent"
           placeholder="your@email.com"
         />
       </div>
 
       <div>
-        <label htmlFor="password" className="block text-sm font-medium text-blck-silver">
+        <label htmlFor="password" className="block text-sm font-medium text-white">
           Password
         </label>
         <input
@@ -72,7 +72,7 @@ export default function LoginForm() {
           required
           value={formData.password}
           onChange={handleChange}
-          className="mt-1 block w-full rounded-md border border-blck-purple bg-blck-purple p-2.5 text-white focus:border-blck-accent focus:outline-none focus:ring-1 focus:ring-blck-accent"
+          className="mt-1 block w-full rounded-md border border-blck-accent/30 bg-blck-purple/50 p-2.5 text-white placeholder-blck-silver/70 focus:border-blck-accent focus:outline-none focus:ring-1 focus:ring-blck-accent"
           placeholder="••••••••"
         />
       </div>
@@ -83,9 +83,9 @@ export default function LoginForm() {
             id="remember-me"
             name="remember-me"
             type="checkbox"
-            className="h-4 w-4 rounded border-blck-purple bg-blck-purple text-blck-accent focus:ring-blck-accent"
+            className="h-4 w-4 rounded border-blck-accent bg-blck-purple/50 text-blck-accent focus:ring-blck-accent"
           />
-          <label htmlFor="remember-me" className="ml-2 block text-sm text-blck-textMuted">
+          <label htmlFor="remember-me" className="ml-2 block text-sm text-blck-silver">
             Remember me
           </label>
         </div>

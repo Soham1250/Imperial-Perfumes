@@ -10,9 +10,9 @@ const Footer = () => {
   return (
     <footer className="bg-blck-darkPurple text-white pt-16 pb-8">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           {/* Brand Column */}
-          <div>
+          <div className="md:col-span-1">
             <div className="mb-6 flex items-center animate-fade-in">
               <span className="font-serif text-xl font-bold text-blck-gold">
                 Imperial <span className="font-light text-white">Perfumes</span>
@@ -57,7 +57,7 @@ const Footer = () => {
           </div>
           
           {/* Quick Links */}
-          <div>
+          <div className="md:col-span-1">
             <h3 className="font-serif text-lg font-medium text-blck-gold mb-6">Quick Links</h3>
             <ul className="space-y-3">
               <li>
@@ -93,40 +93,8 @@ const Footer = () => {
             </ul>
           </div>
           
-          {/* Customer Service */}
-          <div>
-            <h3 className="font-serif text-lg font-medium text-blck-gold mb-6">Customer Service</h3>
-            <ul className="space-y-3">
-              <li>
-                <Link href="/contact" className="text-gray-300 hover:text-blck-gold transition-colors">
-                  Contact Us
-                </Link>
-              </li>
-              <li>
-                <Link href="/shipping" className="text-gray-300 hover:text-blck-gold transition-colors">
-                  Shipping & Returns
-                </Link>
-              </li>
-              <li>
-                <Link href="/faq" className="text-gray-300 hover:text-blck-gold transition-colors">
-                  FAQ
-                </Link>
-              </li>
-              <li>
-                <Link href="/privacy-policy" className="text-gray-300 hover:text-blck-gold transition-colors">
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link href="/terms-of-service" className="text-gray-300 hover:text-blck-gold transition-colors">
-                  Terms of Service
-                </Link>
-              </li>
-            </ul>
-          </div>
-          
           {/* Newsletter & Contact */}
-          <div>
+          <div className="md:col-span-1">
             <h3 className="font-serif text-lg font-medium text-blck-gold mb-6">Stay Connected</h3>
             <p className="text-gray-300 mb-4">
               Subscribe to receive updates, access to exclusive deals, and more.
