@@ -52,29 +52,29 @@ export default function Home() {
       <section className="py-20 bg-blck-darkPurple">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12 blck-swirl">
-            <h2 className="text-3xl font-heading font-bold mb-4 text-blck-silver">Featured Collections</h2>
+            <h2 className="text-3xl font-heading font-bold mb-4 text-blck-silver">Featured Fragrances</h2>
             <p className="text-blck-textMuted max-w-2xl mx-auto">
               Discover our most coveted fragrances, each telling a unique story and evoking distinct emotions.
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="blck-card overflow-hidden">
-              <div className="relative h-80">
+            <div className="blck-card overflow-hidden group">
+              <div className="relative h-80 overflow-hidden">
                 <Image
-                  src="/images/perfume-1.jpg"
-                  alt="Imperial Elixir 1"
+                  src="/images/imperial rogue.png"
+                  alt="Imperial Elixir Noir"
                   fill
-                  className="object-cover"
+                  className="object-contain bg-blck-cardLight transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
               <div className="p-6">
                 <h3 className="font-heading text-xl font-semibold mb-2 text-blck-silver">Imperial Elixir Noir</h3>
-                <p className="text-blck-textMuted mb-4">A captivating blend of exotic notes that transport you to distant lands.</p>
+                <p className="text-blck-textMuted mb-4">A captivating blend of exotic notes with amber, oud, and hints of spice that transport you to distant lands.</p>
                 <div className="flex justify-between items-center">
                   <span className="text-lg font-medium text-blck-gold">₹199.00</span>
                   <Button variant="blck" size="sm" asChild>
-                    <Link href="/products/1">View Details</Link>
+                    <Link href="/collections/1">View Details</Link>
                   </Button>
                 </div>
               </div>
@@ -95,7 +95,7 @@ export default function Home() {
                 <div className="flex justify-between items-center">
                   <span className="text-lg font-medium text-blck-gold">₹229.00</span>
                   <Button variant="blck" size="sm" asChild>
-                    <Link href="/products/2">View Details</Link>
+                    <Link href="/collections/2">View Details</Link>
                   </Button>
                 </div>
               </div>
@@ -116,7 +116,7 @@ export default function Home() {
                 <div className="flex justify-between items-center">
                   <span className="text-lg font-medium text-blck-gold">₹249.00</span>
                   <Button variant="blck" size="sm" asChild>
-                    <Link href="/collections">View Details</Link>
+                    <Link href="/collections/3">View Details</Link>
                   </Button>
                 </div>
               </div>
@@ -288,21 +288,25 @@ export default function Home() {
               <p className="text-blck-textMuted mb-6">
                 At Imperial Perfumes, we believe that a fragrance is more than just a scent—it's an expression of individuality, a memory captured in a bottle, a statement of elegance.
               </p>
-              <p className="text-blck-textMuted mb-8">
+              <p className="text-blck-textMuted mb-6">
                 Our master perfumers travel the world to source the finest ingredients, creating compositions that balance tradition with innovation.
               </p>
-              <Button variant="blck" size="lg" asChild>
+              <Button variant="blck" size="lg" asChild className="mb-8">
                 <Link href="/about">Discover Our Story</Link>
               </Button>
             </div>
             
-            <div className="relative h-96 rounded-lg overflow-hidden blck-card">
-              <Image
-                src="/images/perfumery-art.jpg"
-                alt="The art of perfumery"
-                fill
-                className="object-cover"
-              />
+            <div className="blck-card p-8 rounded-lg">
+              <h3 className="text-2xl font-heading font-semibold mb-4 text-blck-silver">The Essence of Perfume Making</h3>
+              <p className="text-blck-textMuted mb-4">
+                Perfumery is an ancient art dating back thousands of years to the early civilizations of Mesopotamia and Egypt. The word "perfume" comes from the Latin "per fumum," meaning "through smoke," reflecting the original method of releasing fragrant scents.
+              </p>
+              <p className="text-blck-textMuted mb-4">
+                Modern perfumery emerged in the late 19th century with the synthesis of aromatic compounds, revolutionizing the industry and making fine fragrances more accessible. Today, creating a perfume involves careful selection and blending of top notes (the initial impression), heart notes (the essence of the perfume), and base notes (the foundation that lasts).
+              </p>
+              <p className="text-blck-textMuted">
+                Each perfume is a complex composition of natural extracts, essential oils, and aroma compounds, carefully balanced to create a harmonious and evocative scent experience that evolves over time on the skin.
+              </p>
             </div>
           </div>
         </div>
@@ -317,14 +321,17 @@ export default function Home() {
           </p>
           
           <form className="max-w-md mx-auto">
-            <div className="flex">
+            <div className="flex items-stretch">
               <input
                 type="email"
                 placeholder="Your email address"
-                className="flex-grow px-4 py-3 rounded-l-xl border-2 border-blck-silver border-r-0 focus:outline-none bg-blck-purple text-blck-text"
+                className="flex-grow px-4 py-3 rounded-l-md border-2 border-blck-silver border-r-0 focus:outline-none focus:ring-2 focus:ring-blck-accent bg-blck-purple text-white"
                 required
               />
-              <Button variant="blck" className="rounded-l-none">
+              <Button 
+                variant="blck" 
+                className="rounded-l-none px-6 h-auto text-base font-medium"
+              >
                 Subscribe
               </Button>
             </div>

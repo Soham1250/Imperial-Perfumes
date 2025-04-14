@@ -30,10 +30,7 @@ export default function CheckoutPage() {
     pincode: '',
     
     // Payment details
-    cardName: '',
-    cardNumber: '',
-    expiryDate: '',
-    cvv: '',
+    upiId: '',
     
     // Order notes
     notes: ''
@@ -372,68 +369,40 @@ function PaymentStep({ formData, handleInputChange, nextStep, prevStep }: {
             <div className="w-6 h-6 rounded-full bg-blck-accent flex items-center justify-center mr-3">
               <Check size={14} className="text-white" />
             </div>
-            <span className="text-blck-silver">Credit/Debit Card</span>
+            <span className="text-blck-silver">UPI Payment</span>
           </div>
           
           <div>
-            <label className="block text-blck-silver text-sm mb-2">Name on Card *</label>
+            <label className="block text-blck-silver text-sm mb-2">UPI ID *</label>
             <input
               type="text"
-              name="cardName"
-              value={formData.cardName}
+              name="upiId"
+              value={formData.upiId || ''}
               onChange={handleInputChange}
+              placeholder="yourname@upi"
               className="w-full p-3 bg-blck-purple border border-blck-purple rounded-md focus:outline-none focus:ring-2 focus:ring-blck-accent text-white"
               required
             />
           </div>
           
-          <div className="mt-4">
-            <label className="block text-blck-silver text-sm mb-2">Card Number *</label>
-            <input
-              type="text"
-              name="cardNumber"
-              value={formData.cardNumber}
-              onChange={handleInputChange}
-              placeholder="XXXX XXXX XXXX XXXX"
-              className="w-full p-3 bg-blck-purple border border-blck-purple rounded-md focus:outline-none focus:ring-2 focus:ring-blck-accent text-white"
-              required
-            />
-          </div>
-          
-          <div className="grid grid-cols-2 gap-4 mt-4">
-            <div>
-              <label className="block text-blck-silver text-sm mb-2">Expiry Date *</label>
-              <input
-                type="text"
-                name="expiryDate"
-                value={formData.expiryDate}
-                onChange={handleInputChange}
-                placeholder="MM/YY"
-                className="w-full p-3 bg-blck-purple border border-blck-purple rounded-md focus:outline-none focus:ring-2 focus:ring-blck-accent text-white"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-blck-silver text-sm mb-2">CVV *</label>
-              <input
-                type="text"
-                name="cvv"
-                value={formData.cvv}
-                onChange={handleInputChange}
-                placeholder="XXX"
-                className="w-full p-3 bg-blck-purple border border-blck-purple rounded-md focus:outline-none focus:ring-2 focus:ring-blck-accent text-white"
-                required
-              />
-            </div>
+          <div className="mt-4 text-sm text-blck-textMuted">
+            <p>We accept all major UPI apps including Google Pay, PhonePe, Paytm, and BHIM.</p>
+            <p className="mt-2">You will receive a payment request on your UPI app after placing the order.</p>
           </div>
         </div>
         
-        <div className="opacity-50">
+        <div className="bg-blck-purple/50 p-4 rounded-md mb-6">
           <div className="flex items-center mb-4">
             <div className="w-6 h-6 rounded-full bg-blck-purple flex items-center justify-center mr-3">
               <span className="text-white text-xs">2</span>
             </div>
-            <span className="text-blck-silver">UPI Payment (Coming Soon)</span>
+            <span className="text-blck-silver">Cash on Delivery</span>
+          </div>
+          
+          <div className="text-sm text-blck-textMuted">
+            <p>Pay with cash when your order is delivered.</p>
+            <p className="mt-2">Please have the exact amount ready to ensure a smooth delivery process.</p>
+            <p className="mt-2">Note: For orders above ₹2000, we require a 20% advance payment via UPI.</p>
           </div>
         </div>
         
@@ -442,7 +411,22 @@ function PaymentStep({ formData, handleInputChange, nextStep, prevStep }: {
             <div className="w-6 h-6 rounded-full bg-blck-purple flex items-center justify-center mr-3">
               <span className="text-white text-xs">3</span>
             </div>
-            <span className="text-blck-silver">Cash on Delivery (Coming Soon)</span>
+            <span className="text-blck-silver">Credit/Debit Card (Coming Soon)</span>
+          </div>
+          
+          <div className="flex flex-wrap gap-2 mt-2 ml-9">
+            <div className="w-12 h-8 bg-blck-purple rounded flex items-center justify-center">
+              <span className="text-xs text-blck-silver">Visa</span>
+            </div>
+            <div className="w-12 h-8 bg-blck-purple rounded flex items-center justify-center">
+              <span className="text-xs text-blck-silver">MC</span>
+            </div>
+            <div className="w-12 h-8 bg-blck-purple rounded flex items-center justify-center">
+              <span className="text-xs text-blck-silver">Amex</span>
+            </div>
+            <div className="w-12 h-8 bg-blck-purple rounded flex items-center justify-center">
+              <span className="text-xs text-blck-silver">RuPay</span>
+            </div>
           </div>
         </div>
         
@@ -509,8 +493,8 @@ function ReviewStep({ formData, items, subtotal, shippingCost, total, handleSubm
             <div className="flex items-center">
               <CreditCard size={20} className="text-blck-gold mr-3" />
               <div>
-                <p className="text-white">Credit/Debit Card</p>
-                <p className="text-gray-400">Card ending in {formData.cardNumber.slice(-4)}</p>
+                <p className="text-white">UPI Payment</p>
+                <p className="text-gray-400">UPI ID: {formData.upiId}</p>
               </div>
             </div>
           </div>

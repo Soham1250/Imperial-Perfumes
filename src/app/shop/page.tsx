@@ -4,6 +4,8 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
+import { useCart } from '@/context/CartContext'
+import { toast } from 'react-hot-toast'
 
 // Sample perfume data - 50 perfumes
 const perfumes = [
@@ -62,7 +64,23 @@ const perfumes = [
 const ShopPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [priceFilter, setPriceFilter] = useState('all');
+  const { addItem } = useCart();
   
+  const handleAddToCart = (e: React.MouseEvent, perfume: any) => {
+    e.preventDefault(); // Prevent navigation
+    
+    addItem({
+      id: perfume.id.toString(),
+      name: perfume.name,
+      price: perfume.price,
+      image: `/images/perfumes/placeholder.jpg`, // Default image path
+      quantity: 1,
+      size: '30ml' // Default size
+    });
+    
+    toast.success(`${perfume.name} added to cart!`);
+  };
+
   const filteredPerfumes = perfumes.filter(perfume => {
     const matchesSearch = perfume.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
                          perfume.description.toLowerCase().includes(searchTerm.toLowerCase());
@@ -112,7 +130,7 @@ const ShopPage = () => {
         {/* Perfume Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {filteredPerfumes.map((perfume) => (
-            <Link href={`/checkout`} key={perfume.id}>
+            <Link href={`/product/${perfume.id}`} key={perfume.id}>
               <div className="bg-blck-card rounded-lg overflow-hidden hover:shadow-lg hover:shadow-blck-accent/20 transition-all duration-300 h-full flex flex-col">
                 <div className="p-6 flex-grow">
                   <h3 className="text-xl font-medium mb-2 text-blck-silver">{perfume.name}</h3>
@@ -120,7 +138,10 @@ const ShopPage = () => {
                   <p className="text-blck-gold font-medium">₹{perfume.price}</p>
                 </div>
                 <div className="px-6 pb-6">
-                  <Button className="w-full bg-blck-accent hover:bg-blck-accent/80 text-white">
+                  <Button 
+                    className="w-full bg-blck-accent hover:bg-blck-accent/80 text-white"
+                    onClick={(e) => handleAddToCart(e, perfume)}
+                  >
                     Add to Cart
                   </Button>
                 </div>

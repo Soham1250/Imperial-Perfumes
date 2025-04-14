@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useCart } from '@/context/CartContext'
-import { ShoppingBag, Menu, X, Search, User } from 'lucide-react'
+import { ShoppingBag, Menu, X, Search } from 'lucide-react'
+import UserDropdown from '../auth/UserDropdown'
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -65,9 +66,7 @@ const Header = () => {
               <Search size={20} />
             </Link>
             
-            <Link href="/account" className="p-2 rounded-full hover:bg-blck-lightOrange transition-colors text-blck-silver hover:text-white">
-              <User size={20} />
-            </Link>
+            <UserDropdown />
             
             <Link href="/cart" className="relative p-2 rounded-full hover:bg-blck-lightOrange transition-colors text-blck-silver hover:text-white">
               <ShoppingBag size={20} />
@@ -154,13 +153,9 @@ const Header = () => {
                 <Search size={20} />
               </Link>
               
-              <Link 
-                href="/account" 
-                className="p-2 rounded-full hover:bg-blck-lightOrange transition-colors text-blck-silver hover:text-white"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <User size={20} />
-              </Link>
+              <div onClick={() => setIsMobileMenuOpen(false)}>
+                <UserDropdown />
+              </div>
             </div>
           </div>
         </div>
