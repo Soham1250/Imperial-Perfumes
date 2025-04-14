@@ -1,8 +1,25 @@
+'use client'
+
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useState } from 'react'
+import MembershipPopup from '@/components/ui/MembershipPopup'
 
 export default function Home() {
+  const [showMembershipPopup, setShowMembershipPopup] = useState(false);
+  
+  // Function to show gratitude popup for membership interest
+  const handleMembershipInterest = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setShowMembershipPopup(true);
+  };
+  
+  // Function to close the membership popup
+  const closeMembershipPopup = () => {
+    setShowMembershipPopup(false);
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-blck-darkPurple">
       {/* Hero Section */}
@@ -272,8 +289,12 @@ export default function Home() {
           </div>
           
           <div className="text-center mt-12">
-            <Button variant="blck" size="lg" asChild>
-              <Link href="/membership">Join Now</Link>
+            <Button 
+              variant="blck" 
+              size="lg" 
+              onClick={handleMembershipInterest}
+            >
+              Join Now
             </Button>
           </div>
         </div>
@@ -338,6 +359,10 @@ export default function Home() {
           </form>
         </div>
       </section>
+      <MembershipPopup 
+        isOpen={showMembershipPopup} 
+        onClose={closeMembershipPopup} 
+      />
     </div>
   )
 }

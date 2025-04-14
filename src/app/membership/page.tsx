@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import Image from 'next/image'
+import toast from 'react-hot-toast'
 
 // Membership tiers data
 const membershipTiers = [
@@ -54,6 +55,24 @@ const membershipTiers = [
 
 export default function MembershipPage() {
   const [selectedTier, setSelectedTier] = useState('gold');
+  
+  const handleMembershipJoin = () => {
+    toast.success(
+      <div className="flex items-center gap-2">
+        <span>Thanks for your interest! Coming soon ✨</span>
+        <span className="text-xl">🎁</span>
+      </div>,
+      {
+        duration: 5000,
+        style: {
+          background: '#1a0f25',
+          color: '#fff',
+          border: '1px solid #4a154b',
+        },
+        icon: '💖',
+      }
+    );
+  };
   
   return (
     <div className="min-h-screen bg-blck-darkPurple pt-24 pb-16">
@@ -183,6 +202,7 @@ export default function MembershipPage() {
               size="lg" 
               className="px-8"
               disabled={!selectedTier}
+              onClick={handleMembershipJoin}
             >
               Join {membershipTiers.find(tier => tier.id === selectedTier)?.name} Membership
             </Button>
@@ -305,6 +325,7 @@ export default function MembershipPage() {
               variant="blck" 
               size="lg" 
               className="px-8"
+              onClick={handleMembershipJoin}
             >
               Become a Member
             </Button>
