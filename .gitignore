@@ -16,9 +16,6 @@ node_modules
 # production
 /build
 
-# Keep public folder with images
-# /public/
-
 /src/config.template.js
 /src/services/config.template.js
 /src/app/api/auth/me/route.template.js
