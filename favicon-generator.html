@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Imperial Perfumes Favicon Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    .preview {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .favicon {
+      border: 1px solid #ddd;
+      padding: 10px;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .favicon svg {
+      margin-bottom: 10px;
+    }
+    .instructions {
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      color: #333;
+    }
+    button {
+      background-color: #4a154b;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #7c3e81;
+    }
+    code {
+      background-color: #f0f0f0;
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Imperial Perfumes Favicon Generator</h1>
+    
+    <div class="preview">
+      <div class="favicon">
+        <svg id="favicon1" width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" fill="#1a0f25" />
+          <text x="16" y="22" font-family="serif" font-size="20" font-weight="bold" fill="#d4af37" text-anchor="middle">I</text>
+        </svg>
+        <p>Option 1: Simple Elegant</p>
+        <button onclick="downloadSVG('favicon1', 'imperial-favicon-1')">Download</button>
+      </div>
+      
+      <div class="favicon">
+        <svg id="favicon2" width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" fill="#1a0f25" />
+          <circle cx="16" cy="16" r="12" fill="none" stroke="#d4af37" stroke-width="1.5" />
+          <text x="16" y="22" font-family="serif" font-size="16" font-weight="bold" fill="#d4af37" text-anchor="middle">IP</text>
+        </svg>
+        <p>Option 2: Circular Logo</p>
+        <button onclick="downloadSVG('favicon2', 'imperial-favicon-2')">Download</button>
+      </div>
+      
+      <div class="favicon">
+        <svg id="favicon3" width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" fill="#1a0f25" />
+          <path d="M16,5 C12,5 9,8 9,16 C9,24 12,27 16,27 C20,27 23,24 23,16 C23,8 20,5 16,5 Z" fill="none" stroke="#d4af37" stroke-width="1.5" />
+          <path d="M16,10 L16,22" stroke="#d4af37" stroke-width="1.5" />
+          <path d="M13,13 L19,13" stroke="#d4af37" stroke-width="1.5" />
+        </svg>
+        <p>Option 3: Perfume Bottle</p>
+        <button onclick="downloadSVG('favicon3', 'imperial-favicon-3')">Download</button>
+      </div>
+    </div>
+    
+    <div class="instructions">
+      <h2>How to Use This Favicon</h2>
+      <ol>
+        <li>Click the "Download" button under your preferred design</li>
+        <li>Convert the downloaded SVG to ICO format using an online converter like <a href="https://convertio.co/svg-ico/" target="_blank">Convertio</a> or <a href="https://favicon.io/favicon-converter/" target="_blank">Favicon.io</a></li>
+        <li>Place the favicon.ico file in the <code>public</code> folder of your Next.js project</li>
+        <li>Add the following line to the <code>&lt;Head&gt;</code> component in your layout:
+          <pre><code>&lt;link rel="icon" href="/favicon.ico" sizes="any" /&gt;</code></pre>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <script>
+    function downloadSVG(id, filename) {
+      const svg = document.getElementById(id);
+      const serializer = new XMLSerializer();
+      let source = serializer.serializeToString(svg);
+      
+      // Add XML declaration
+      source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
+      
+      const url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(source);
+      const link = document.createElement("a");
+      link.download = filename + ".svg";
+      link.href = url;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
+</body>
+</html>

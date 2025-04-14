@@ -6,7 +6,6 @@ node_modules
 # testing
 /coverage
 
-
 /src/config.js
 /src/services/config.js
 
@@ -17,8 +16,8 @@ node_modules
 # production
 /build
 
-# public folder
-/public/
+# Keep public folder with images
+# /public/
 
 /src/config.template.js
 /src/services/config.template.js
