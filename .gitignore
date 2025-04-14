@@ -7,6 +7,7 @@ node_modules
 /coverage
 
 src/config.js
+src/services/config.js
 
 # next.js
 /.next/
