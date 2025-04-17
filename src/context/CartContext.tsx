@@ -11,6 +11,7 @@ export interface CartItem {
   image: string
   quantity: number
   size?: string
+  type?: 'Perfume' | 'Attar'
 }
 
 interface CartContextType {

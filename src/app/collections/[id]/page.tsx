@@ -219,12 +219,20 @@ export default function PerfumeDetailPage({ params }: { params: { id: string } }
   const { addItem } = useCart()
   const [selectedSize, setSelectedSize] = useState<string | null>(null)
   const [isAddingToCart, setIsAddingToCart] = useState(false)
+  const [perfumeType, setPerfumeType] = useState<'Perfume' | 'Attar'>('Perfume')
   
   // Available sizes
-  const sizes = [
+  const perfumeSizes = [
     { size: "30ml", priceMultiplier: 1 },
     { size: "60ml", priceMultiplier: 1.8 },
     { size: "100ml", priceMultiplier: 2.5 }
+  ]
+  
+  const attarSizes = [
+    { size: "3ml", priceMultiplier: 0.4 },
+    { size: "5ml", priceMultiplier: 0.6 },
+    { size: "8ml", priceMultiplier: 0.85 },
+    { size: "12.5ml", priceMultiplier: 1.2 }
   ]
   
   if (!perfume) {
@@ -235,6 +243,7 @@ export default function PerfumeDetailPage({ params }: { params: { id: string } }
     setIsAddingToCart(true)
     
     // If no size is selected, use the default size
+    const sizes = perfumeType === 'Perfume' ? perfumeSizes : attarSizes
     const size = selectedSize || sizes[0].size
     
     // Find the price multiplier for the selected size
@@ -248,11 +257,12 @@ export default function PerfumeDetailPage({ params }: { params: { id: string } }
       price: price,
       image: perfume.image,
       quantity: 1,
-      size: size
+      size: size,
+      type: perfumeType
     })
     
     // Show success notification
-    toast.success(`${perfume.name} (${size}) added to cart`)
+    toast.success(`${perfume.name} (${perfumeType} - ${size}) added to cart`)
     
     // Reset the loading state
     setTimeout(() => {
@@ -303,10 +313,42 @@ export default function PerfumeDetailPage({ params }: { params: { id: string } }
               <p className="text-blck-textMuted">{perfume.description}</p>
             </div>
             
+            <div className="mb-6">
+              <h2 className="text-xl font-heading font-semibold text-blck-silver mb-4">Select Type</h2>
+              <div className="flex space-x-4 mb-4">
+                <button
+                  onClick={() => {
+                    setPerfumeType('Perfume');
+                    setSelectedSize(null);
+                  }}
+                  className={`px-6 py-3 rounded-md border transition-all ${
+                    perfumeType === 'Perfume'
+                      ? 'border-blck-gold bg-blck-accent/20 text-blck-gold'
+                      : 'border-blck-purple bg-blck-purple/30 text-blck-textMuted hover:border-blck-silver'
+                  }`}
+                >
+                  Perfume
+                </button>
+                <button
+                  onClick={() => {
+                    setPerfumeType('Attar');
+                    setSelectedSize(null);
+                  }}
+                  className={`px-6 py-3 rounded-md border transition-all ${
+                    perfumeType === 'Attar'
+                      ? 'border-blck-gold bg-blck-accent/20 text-blck-gold'
+                      : 'border-blck-purple bg-blck-purple/30 text-blck-textMuted hover:border-blck-silver'
+                  }`}
+                >
+                  Attar
+                </button>
+              </div>
+            </div>
+            
             <div className="mb-8">
               <h2 className="text-xl font-heading font-semibold text-blck-silver mb-4">Select Size</h2>
-              <div className="flex space-x-4 mb-4">
-                {sizes.map((sizeOption) => (
+              <div className="flex flex-wrap gap-4 mb-4">
+                {(perfumeType === 'Perfume' ? perfumeSizes : attarSizes).map((sizeOption) => (
                   <button
                     key={sizeOption.size}
                     onClick={() => setSelectedSize(sizeOption.size)}
@@ -324,7 +366,7 @@ export default function PerfumeDetailPage({ params }: { params: { id: string } }
                 ))}
               </div>
               <p className="text-sm text-blck-textMuted">
-                {selectedSize ? `Selected: ${selectedSize}` : 'Select a size'}
+                {selectedSize ? `Selected: ${perfumeType} - ${selectedSize}` : `Select a ${perfumeType.toLowerCase()} size`}
               </p>
             </div>
             
