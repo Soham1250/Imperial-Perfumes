@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 require('dotenv').config({ path: '.env.local' });
 
+// Import the shared auth utility
+const { hashPassword } = require('../src/utils/auth');
+
 // MongoDB Connection
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/imperial-perfumes';
 
@@ -42,6 +45,7 @@ const CollectionSchema = new mongoose.Schema({
   notes: { type: String, required: true }
 }, { timestamps: true });
 
+// Address schema
 const AddressSchema = new mongoose.Schema({
   street: {
     type: String,
@@ -113,86 +117,49 @@ const UserSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Hash password before saving
-UserSchema.pre('save', async function(next) {
-  if (!this.isModified('password')) return next();
-  
-  try {
-    const bcrypt = require('bcryptjs');
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
-    next();
-  } catch (error) {
-    next(error);
-  }
-});
-
 // Create models
 const Product = mongoose.models.Product || mongoose.model('Product', ProductSchema);
 const Collection = mongoose.models.Collection || mongoose.model('Collection', CollectionSchema);
 const User = mongoose.models.User || mongoose.model('User', UserSchema);
 
-// Sample data
+// Sample collections data
 const collections = [
   {
-    id: "office",
-    name: "Office Collection",
-    description: "Professional fragrances that exude confidence and sophistication, perfect for the workplace environment.",
-    image: "/images/imperial rogue.png",
-    perfumeCount: 8,
-    notes: "Subtle woods, light citrus, and clean musk"
+    id: "signature",
+    name: "Signature Collection",
+    description: "Our flagship collection featuring our most iconic fragrances that define the Imperial Perfumes brand.",
+    image: "/images/signature-collection.jpg",
+    perfumeCount: 4,
+    notes: "Amber, Oud, Vanilla, Sandalwood"
   },
   {
-    id: "beach",
-    name: "Beach Collection",
-    description: "Fresh, aquatic scents that capture the essence of coastal breezes and sunny days by the ocean.",
-    image: "/images/imperial rogue.png",
-    perfumeCount: 6,
-    notes: "Marine accords, coconut, and tropical flowers"
+    id: "oud",
+    name: "Oud Collection",
+    description: "Luxurious fragrances centered around the precious oud wood, known for its rich, woody, and complex aroma.",
+    image: "/images/oud-collection.jpg",
+    perfumeCount: 3,
+    notes: "Oud, Saffron, Rose, Amber"
   },
   {
-    id: "travel",
-    name: "Travel Collection",
-    description: "Exotic fragrances inspired by global destinations, designed to transport you to far-off places.",
-    image: "/images/imperial rogue.png",
-    perfumeCount: 7,
-    notes: "Spices, rare woods, and indigenous flowers"
-  },
-  {
-    id: "gym",
-    name: "Gym Collection",
-    description: "Energizing, fresh scents perfect for active lifestyles and workout sessions.",
-    image: "/images/imperial rogue.png",
-    perfumeCount: 5,
-    notes: "Citrus, mint, and clean ozonic accords"
-  },
-  {
-    id: "party",
-    name: "Party Collection",
-    description: "Bold, statement fragrances designed to stand out and leave a lasting impression at social gatherings.",
-    image: "/images/imperial rogue.png",
-    perfumeCount: 9,
-    notes: "Rich amber, vanilla, and exotic spices"
-  },
-  {
-    id: "date",
-    name: "Date Collection",
-    description: "Romantic, sensual fragrances crafted to create an intimate atmosphere for special moments.",
-    image: "/images/imperial rogue.png",
-    perfumeCount: 7,
-    notes: "Rose, jasmine, and warm musks"
+    id: "floral",
+    name: "Floral Collection",
+    description: "Elegant fragrances that celebrate the beauty of floral notes, from delicate jasmine to rich rose.",
+    image: "/images/floral-collection.jpg",
+    perfumeCount: 3,
+    notes: "Rose, Jasmine, Lily, Peony"
   }
 ];
 
+// Sample products data
 const perfumes = [
   {
     id: 1,
     name: "Imperial Perfume 1",
     description: "A captivating blend of exotic notes that transport you to distant lands.",
-    details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl.",
     price: 199,
     image: "/images/imperial rogue.png",
-    collections: ["office", "travel"],
+    details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl.",
+    collections: ["signature"],
     notes: {
       top: ["Bergamot", "Lemon", "Black Pepper"],
       middle: ["Lavender", "Geranium", "Cardamom"],
@@ -202,18 +169,16 @@ const perfumes = [
       { source: "Instagram", author: "@fragrancelover", text: "Absolutely stunning fragrance! The longevity is incredible and I get compliments every time I wear it.", rating: 5 },
       { source: "Facebook", author: "Michael R.", text: "A sophisticated scent that's perfect for special occasions. Highly recommend!", rating: 4 },
       { source: "Website", author: "Sarah J.", text: "My signature scent for over a year now. Nothing else compares to the complexity and elegance.", rating: 5 }
-    ],
-    inStock: true,
-    featured: true
+    ]
   },
   {
     id: 2,
     name: "Imperial Perfume 2",
     description: "A rich and warm fragrance with notes of amber, vanilla, and sandalwood.",
-    details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl.",
     price: 229,
     image: "/images/imperial rogue.png",
-    collections: ["date", "party"],
+    details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl.",
+    collections: ["signature"],
     notes: {
       top: ["Bergamot", "Cardamom", "Pink Pepper"],
       middle: ["Amber", "Vanilla", "Cinnamon"],
@@ -223,18 +188,16 @@ const perfumes = [
       { source: "Instagram", author: "@scentcritic", text: "One of the most luxurious amber fragrances I've ever experienced. Worth every penny.", rating: 5 },
       { source: "Facebook", author: "Jennifer L.", text: "My husband loves this! It's warm, inviting, and lasts all day.", rating: 5 },
       { source: "Website", author: "David M.", text: "A masterpiece of perfumery. The dry down is absolutely divine.", rating: 4 }
-    ],
-    inStock: true,
-    featured: false
+    ]
   },
   {
     id: 3,
     name: "Imperial Perfume 3",
     description: "A bold and daring fragrance with notes of leather, spice, and dark woods.",
-    details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl.",
     price: 249,
     image: "/images/imperial rogue.png",
-    collections: ["office", "party"],
+    details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl.",
+    collections: ["oud"],
     notes: {
       top: ["Black Pepper", "Saffron", "Elemi"],
       middle: ["Leather", "Oud", "Rose"],
@@ -244,165 +207,149 @@ const perfumes = [
       { source: "Instagram", author: "@fragrancejunkie", text: "This is not for the faint of heart. Bold, masculine, and unforgettable.", rating: 5 },
       { source: "Facebook", author: "Robert T.", text: "The leather note is so realistic. A true masterpiece for those who appreciate daring scents.", rating: 4 },
       { source: "Website", author: "Alexandra P.", text: "I wear this despite it being marketed for men. It's powerful and makes me feel confident.", rating: 5 }
-    ],
-    inStock: true,
-    featured: true
+    ]
   },
   {
     id: 4,
     name: "Imperial Perfume 4",
     description: "An enchanting floral fragrance with notes of orchid, jasmine, and musk.",
-    details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl.",
     price: 189,
     image: "/images/imperial rogue.png",
-    collections: ["date"],
+    details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl.",
+    collections: ["floral"],
     notes: {
-      top: ["Bergamot", "Pink Pepper", "Pear"],
+      top: ["Bergamot", "Peach", "Green Notes"],
       middle: ["Orchid", "Jasmine", "Rose"],
-      base: ["Musk", "Vanilla", "Patchouli"]
+      base: ["Musk", "Vanilla", "Amber"]
     },
     reviews: [
-      { source: "Instagram", author: "@perfumelover", text: "The most beautiful floral I've ever worn. Elegant, feminine, and long-lasting.", rating: 5 },
-      { source: "Facebook", author: "Emily S.", text: "I get so many compliments when I wear this. It's become my signature scent.", rating: 5 },
+      { source: "Instagram", author: "@perfumelover", text: "The most beautiful floral I've ever worn. Elegant and feminine.", rating: 5 },
+      { source: "Facebook", author: "Emily S.", text: "I receive so many compliments when I wear this. It's become my signature scent.", rating: 5 },
       { source: "Website", author: "Thomas K.", text: "Bought this for my wife and she absolutely loves it. A truly elegant scent.", rating: 5 }
-    ],
-    inStock: true,
-    featured: false
+    ]
   },
   {
     id: 5,
     name: "Imperial Perfume 5",
     description: "A fresh and invigorating scent with citrus and marine accords.",
-    details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl.",
     price: 179,
     image: "/images/imperial rogue.png",
-    collections: ["beach", "gym"],
+    details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl.",
+    collections: ["signature"],
     notes: {
-      top: ["Lemon", "Grapefruit", "Bergamot"],
-      middle: ["Sea Salt", "Rosemary", "Lavender"],
+      top: ["Lemon", "Bergamot", "Grapefruit"],
+      middle: ["Marine Notes", "Jasmine", "Rosemary"],
       base: ["Musk", "Cedar", "Amber"]
     },
     reviews: [
-      { source: "Instagram", author: "@summerfragrance", text: "Perfect for hot days. So refreshing and clean.", rating: 5 },
-      { source: "Facebook", author: "James L.", text: "My go-to for the gym and outdoor activities. Energizing and fresh.", rating: 4 },
+      { source: "Instagram", author: "@summerscents", text: "Perfect for hot days. So refreshing and clean.", rating: 5 },
+      { source: "Facebook", author: "James L.", text: "Great office scent. Professional and not overpowering.", rating: 4 },
       { source: "Website", author: "Olivia R.", text: "My go-to for hot days. The marine notes are so realistic and refreshing.", rating: 4 }
-    ],
-    inStock: true,
-    featured: false
+    ]
   },
   {
     id: 6,
     name: "Imperial Perfume 6",
     description: "A sophisticated blend of rose, patchouli, and bergamot.",
-    details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl.",
     price: 219,
     image: "/images/imperial rogue.png",
-    collections: ["date", "office"],
+    details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl.",
+    collections: ["floral"],
     notes: {
       top: ["Bergamot", "Mandarin", "Pink Pepper"],
       middle: ["Rose", "Geranium", "Lily of the Valley"],
       base: ["Patchouli", "Sandalwood", "Vanilla"]
     },
     reviews: [
-      { source: "Instagram", author: "@roseperfumelover", text: "The most beautiful rose fragrance I've ever smelled. Not old-fashioned at all.", rating: 5 },
-      { source: "Facebook", author: "Catherine D.", text: "Sophisticated and elegant. Perfect for the office or special occasions.", rating: 4 },
+      { source: "Instagram", author: "@rosefanatic", text: "The most realistic rose fragrance I've ever tried. Absolutely beautiful.", rating: 5 },
+      { source: "Facebook", author: "Catherine M.", text: "Elegant and timeless. Perfect for any occasion.", rating: 4 },
       { source: "Website", author: "William J.", text: "Bought this for my mother and she adores it. A true classic.", rating: 4 }
-    ],
-    inStock: true,
-    featured: false
+    ]
   },
   {
     id: 7,
     name: "Imperial Perfume 7",
     description: "An oriental fragrance with notes of oud, saffron, and amber.",
-    details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl.",
     price: 259,
     image: "/images/imperial rogue.png",
-    collections: ["party", "travel"],
+    details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl.",
+    collections: ["oud"],
     notes: {
-      top: ["Saffron", "Cardamom", "Bergamot"],
+      top: ["Saffron", "Cinnamon", "Cardamom"],
       middle: ["Oud", "Rose", "Jasmine"],
       base: ["Amber", "Vanilla", "Sandalwood"]
     },
     reviews: [
-      { source: "Instagram", author: "@oudlover", text: "One of the best oud fragrances on the market. Rich, complex, and addictive.", rating: 5 },
-      { source: "Facebook", author: "Mohammed A.", text: "Reminds me of the finest Arabian perfumes. Exceptional quality and longevity.", rating: 5 },
+      { source: "Instagram", author: "@oudlover", text: "The most authentic oud fragrance available outside the Middle East.", rating: 5 },
+      { source: "Facebook", author: "Mohammed A.", text: "Reminds me of the finest attars from my homeland. Exceptional quality.", rating: 5 },
       { source: "Website", author: "Sophia K.", text: "Worth every penny. The longevity is incredible and the scent evolution is fascinating.", rating: 4 }
-    ],
-    inStock: true,
-    featured: true
+    ]
   },
   {
     id: 8,
     name: "Imperial Perfume 8",
     description: "A light and airy fragrance with notes of white flowers and citrus.",
-    details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl.",
     price: 169,
     image: "/images/imperial rogue.png",
-    collections: ["beach", "gym"],
+    details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl.",
+    collections: ["floral"],
     notes: {
-      top: ["Lemon", "Bergamot", "Mandarin"],
-      middle: ["Jasmine", "Orange Blossom", "Lily"],
-      base: ["Musk", "Cedar", "Amber"]
+      top: ["Bergamot", "Lemon", "Neroli"],
+      middle: ["Orange Blossom", "Jasmine", "Lily"],
+      base: ["White Musk", "Amber", "Cedarwood"]
     },
     reviews: [
-      { source: "Instagram", author: "@summerfragrance", text: "My favorite summer scent! So light and beautiful.", rating: 5 },
-      { source: "Facebook", author: "Jessica M.", text: "Perfect for everyday wear. Clean, fresh, and not overwhelming.", rating: 4 },
+      { source: "Instagram", author: "@springscents", text: "Like walking through a garden in full bloom. So uplifting!", rating: 5 },
+      { source: "Facebook", author: "Laura B.", text: "My favorite spring fragrance. Light but long-lasting.", rating: 4 },
       { source: "Website", author: "Daniel P.", text: "Bought this for my girlfriend and she wears it every day now. Light but distinctive.", rating: 4 }
-    ],
-    inStock: true,
-    featured: false
+    ]
   },
   {
     id: 9,
     name: "Imperial Perfume 9",
     description: "A woody fragrance with notes of cedar, vetiver, and bergamot.",
-    details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl.",
     price: 209,
     image: "/images/imperial rogue.png",
-    collections: ["office", "travel"],
+    details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl.",
+    collections: ["signature"],
     notes: {
-      top: ["Bergamot", "Elemi", "Pepper"],
-      middle: ["Cedar", "Cypress", "Juniper"],
-      base: ["Vetiver", "Amber", "Musk"]
+      top: ["Bergamot", "Grapefruit", "Pepper"],
+      middle: ["Cedar", "Cypress", "Geranium"],
+      base: ["Vetiver", "Patchouli", "Amber"]
     },
     reviews: [
-      { source: "Instagram", author: "@woodyfragrances", text: "One of the best woody scents I've tried. Natural and sophisticated.", rating: 5 },
-      { source: "Facebook", author: "Andrew T.", text: "Great office scent. Professional and distinctive without being overwhelming.", rating: 4 },
+      { source: "Instagram", author: "@woodyfragrances", text: "The cedar note is so realistic. Like walking through a forest after rain.", rating: 5 },
+      { source: "Facebook", author: "Mark T.", text: "My go-to office scent. Professional and distinctive.", rating: 4 },
       { source: "Website", author: "Rachel B.", text: "I love woody fragrances and this is one of the best I've tried.", rating: 5 }
-    ],
-    inStock: true,
-    featured: false
+    ]
   },
   {
     id: 10,
     name: "Imperial Perfume 10",
     description: "A luxurious blend of rare spices, amber, and vanilla.",
-    details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl.",
     price: 279,
     image: "/images/imperial rogue.png",
-    collections: ["party", "date"],
+    details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, vel aliquam nisl nisl vel nisl.",
+    collections: ["oud"],
     notes: {
-      top: ["Cinnamon", "Nutmeg", "Cardamom"],
-      middle: ["Amber", "Vanilla", "Benzoin"],
-      base: ["Sandalwood", "Musk", "Tonka Bean"]
+      top: ["Saffron", "Cardamom", "Cinnamon"],
+      middle: ["Oud", "Rose", "Amber"],
+      base: ["Vanilla", "Sandalwood", "Musk"]
     },
     reviews: [
-      { source: "Instagram", author: "@luxuryfragrance", text: "Opulent and rich. Perfect for special occasions.", rating: 5 },
-      { source: "Facebook", author: "Victoria L.", text: "My husband can't get enough of this. Sexy and sophisticated.", rating: 5 },
+      { source: "Instagram", author: "@luxuryscents", text: "The most opulent fragrance in my collection. Worth every penny.", rating: 5 },
+      { source: "Facebook", author: "Victoria P.", text: "Received this as a gift and it's become my special occasion scent. Truly luxurious.", rating: 5 },
       { source: "Website", author: "Jonathan K.", text: "A special occasion fragrance that makes you feel like royalty.", rating: 5 }
-    ],
-    inStock: true,
-    featured: true
+    ]
   }
 ];
 
-// Sample users data
+// Sample users with SHA-256 hashed passwords
 const users = [
   {
     email: 'admin@imperialperfumes.com',
-    // Store plain password for seeding - will be hashed by pre-save hook
-    password: 'Admin@123',
+    // Password will be hashed with SHA-256
+    password: hashPassword('Admin@123'),
     name: 'Admin User',
     phone: '9876543210',
     role: 'admin',
@@ -420,7 +367,8 @@ const users = [
   },
   {
     email: 'customer@example.com',
-    password: 'Customer@123',
+    // Password will be hashed with SHA-256
+    password: hashPassword('Customer@123'),
     name: 'Test Customer',
     phone: '8765432109',
     role: 'customer',
@@ -435,35 +383,59 @@ const users = [
         isDefault: true
       }
     ]
+  },
+  {
+    email: 'soham@imperialperfumes.com',
+    // Password will be hashed with SHA-256
+    password: hashPassword('Soham@123'),
+    name: 'Soham Pansare',
+    phone: '9876543211',
+    role: 'admin',
+    isVerified: true,
+    addresses: [
+      {
+        street: '789 Business Park',
+        city: 'Pune',
+        state: 'Maharashtra',
+        pincode: '411001',
+        country: 'India',
+        isDefault: true
+      }
+    ]
   }
 ];
 
 // Function to seed the database
-async function seedDatabase() {
+async function resetDatabase() {
   try {
     // Connect to MongoDB
+    console.log('Connecting to MongoDB...');
     await mongoose.connect(MONGODB_URI);
     console.log('Connected to MongoDB');
 
     // Clear existing data
+    console.log('Clearing existing data...');
     await Collection.deleteMany({});
     await Product.deleteMany({});
     await User.deleteMany({});
-    console.log('Cleared existing data');
+    console.log('All collections cleared');
 
     // Insert collections
+    console.log('Seeding collections...');
     await Collection.insertMany(collections);
-    console.log('Collections seeded successfully');
+    console.log(`Inserted ${collections.length} collections`);
 
     // Insert products
+    console.log('Seeding products...');
     await Product.insertMany(perfumes);
-    console.log('Products seeded successfully');
+    console.log(`Inserted ${perfumes.length} products`);
     
-    // Insert users
+    // Insert users with pre-hashed passwords
+    console.log('Seeding users with SHA-256 hashed passwords...');
     await User.insertMany(users);
-    console.log('Users seeded successfully');
+    console.log(`Inserted ${users.length} users`);
 
-    console.log('Database seeded successfully!');
+    console.log('Database reset and seeded successfully!');
     process.exit(0);
   } catch (error) {
     console.error('Error seeding database:', error);
@@ -471,5 +443,5 @@ async function seedDatabase() {
   }
 }
 
-// Run the seed function
-seedDatabase();
+// Run the seeding function
+resetDatabase();

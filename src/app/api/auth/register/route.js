@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
-import User from '../../../../models/user.model';
+// Dynamically import the User model (CommonJS)
+const User = require('../../../../models/user.model');
 import { connectDatabase } from '../../../../db/connection';
+// Import the shared auth utility
+const { hashPassword } = require('../../../../utils/auth');
 
 export async function POST(request) {
   try {

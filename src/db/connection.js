@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
-const { MONGODB_URI } = require('../config');
+
+// Get MongoDB URI from environment variables
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/imperial-perfumes';
 
 // Track connection status
 let isConnected = false;

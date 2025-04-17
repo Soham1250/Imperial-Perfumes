@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed-db": "node scripts/seed-db.js"
+    "seed-db": "node scripts/seed-db.js",
+    "reset-db": "node scripts/reset-db.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
@@ -31,6 +32,7 @@
     "mongodb": "^6.15.0",
     "mongoose": "^8.13.2",
     "next": "^14.1.0",
+    "next-auth": "^4.24.11",
     "next-cloudinary": "^5.7.0",
     "next-seo": "^6.4.0",
     "postcss": "^8.4.31",

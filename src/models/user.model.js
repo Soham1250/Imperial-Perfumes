@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const bcrypt = require('bcryptjs');
+const { hashPassword, comparePassword } = require('../utils/auth');
 
 /**
  * Address schema
@@ -101,8 +101,8 @@ userSchema.pre('save', async function(next) {
   if (!this.isModified('password')) return next();
   
   try {
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
+    // Use the shared hashPassword utility
+    this.password = hashPassword(this.password);
     next();
   } catch (error) {
     next(error);
@@ -111,7 +111,8 @@ userSchema.pre('save', async function(next) {
 
 // Method to compare passwords
 userSchema.methods.comparePassword = async function(candidatePassword) {
-  return await bcrypt.compare(candidatePassword, this.password);
+  // Use the shared comparePassword utility
+  return comparePassword(candidatePassword, this.password);
 };
 
 const User = mongoose.model('User', userSchema);

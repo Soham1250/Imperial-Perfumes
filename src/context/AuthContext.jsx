@@ -14,7 +14,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch('/api/auth/me');
+        const response = await fetch('/api/auth/me', { credentials: 'include' });
         const data = await response.json();
         
         if (data.success) {
@@ -36,13 +36,22 @@ export function AuthProvider({ children }) {
   // Login function
   const login = async (email, password) => {
     try {
-      const response = await fetch('/api/auth/login', {
+      // Log the attempt for debugging
+      console.log("Attempting login with:", { email });
+      
+      // Use the test-login endpoint (ultra-simple implementation)
+      const response = await fetch('/api/auth/test-login', {
         method: 'POST',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
       });
       
+      // Log the response status
+      console.log("Login response status:", response.status);
+      
       const data = await response.json();
+      console.log("Login response data:", data);
       
       if (data.success) {
         setUser(data.user);
@@ -62,6 +71,7 @@ export function AuthProvider({ children }) {
     try {
       const response = await fetch('/api/auth/register', {
         method: 'POST',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password })
       });
@@ -84,7 +94,8 @@ export function AuthProvider({ children }) {
   const logout = async () => {
     try {
       const response = await fetch('/api/auth/logout', {
-        method: 'POST'
+        method: 'POST',
+        credentials: 'include'
       });
       
       const data = await response.json();
