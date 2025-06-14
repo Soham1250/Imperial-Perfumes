@@ -9,7 +9,7 @@ const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/imperi
 // Import the User model with the correct filename
 import User from '../../../../models/user.model'; // Note: filename is user.model.js
 
-export async function POST(request) {
+export async function POST(request: { json: () => PromiseLike<{ email: any; password: any; }> | { email: any; password: any; }; }) {
   try {
     console.log("Simple login attempt started");
     
@@ -65,12 +65,12 @@ export async function POST(request) {
     });
     
   } catch (error) {
-    console.error("Simple login error:", error);
+    console.error("Simple login error:", error as Error);
     return NextResponse.json(
       { 
         success: false, 
-        message: 'Login failed: ' + error.message,
-        stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        message: `Login failed: ${(error as Error).message}`,
+        stack: process.env.NODE_ENV === 'development' ? (error as Error).stack : undefined
       },
       { status: 500 }
     );
