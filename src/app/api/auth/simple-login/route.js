@@ -6,6 +6,9 @@ import { comparePassword } from '../../../../utils/auth';
 // Get MongoDB URI from environment variables
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/imperial-perfumes';
 
+// Import the User model with the correct filename
+import User from '../../../../models/user.model'; // Note: filename is user.model.js
+
 export async function POST(request) {
   try {
     console.log("Simple login attempt started");
@@ -23,9 +26,8 @@ export async function POST(request) {
     const { email, password } = await request.json();
     console.log("Login attempt for:", email);
     
-    // Find user directly using mongoose
-    const User = mongoose.model('User');
-    const user = await User.findOne({ email }).select('+password');
+    // Find user using the imported User model
+    const user = await User.findOne({ email }).select('+password').lean();
     
     if (!user) {
       console.log("User not found");
@@ -40,7 +42,7 @@ export async function POST(request) {
     
     // Use the shared comparePassword utility
     console.log("Using shared comparePassword utility");
-    const isMatch = comparePassword(password, user.password);
+    const isMatch = await comparePassword(password, user.password);
     console.log("Password match:", isMatch);
     
     if (!isMatch) {

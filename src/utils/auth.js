@@ -1,5 +1,4 @@
-// Create a dual-compatible module (works with both CommonJS and ES modules)
-const crypto = require('crypto');
+import crypto from 'crypto';
 
 /**
  * Hash a password using SHA-256
@@ -23,13 +22,7 @@ function comparePassword(plainPassword, hashedPassword) {
   return hashedPlain === hashedPassword;
 }
 
-// Export for CommonJS
-module.exports = {
-  hashPassword,
-  comparePassword
-};
-
-// Export for ES modules
+// Export the functions
 export {
   hashPassword,
   comparePassword

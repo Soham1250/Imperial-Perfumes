@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const { hashPassword, comparePassword } = require('../utils/auth');
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
+import { hashPassword, comparePassword } from '../utils/auth.js';
 
 /**
  * Address schema
@@ -117,4 +117,4 @@ userSchema.methods.comparePassword = async function(candidatePassword) {
 
 const User = mongoose.model('User', userSchema);
 
-module.exports = User;
+export default User;

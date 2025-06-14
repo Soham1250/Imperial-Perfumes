@@ -2,13 +2,15 @@
   "name": "imperial-perfumes",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "seed-db": "node scripts/seed-db.js",
-    "reset-db": "node scripts/reset-db.js"
+    "reset-db": "node scripts/reset-db.js",
+    "generate-favicons": "node scripts/generate-favicons.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
@@ -52,8 +54,10 @@
     "@types/react": "^18.2.38",
     "@types/react-dom": "^18.2.17",
     "@types/three": "^0.158.3",
+    "@vercel/og": "^0.6.8",
     "eslint": "^8.54.0",
     "eslint-config-next": "^14.0.3",
+    "sharp": "^0.34.2",
     "typescript": "^5.3.2"
   }
 }
