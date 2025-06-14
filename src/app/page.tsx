@@ -35,13 +35,13 @@ export default function Home() {
             <div className="mb-6">
               <h1 className="text-5xl md:text-7xl font-heading font-bold mb-2">
                 <div className="text-reveal">
-                  <span className="block letter-spacing-animation animation-delay-200">Discover</span>
+                  <span className="block letter-spacing-animation animation-delay-200">Discover </span>
                 </div>
                 <div className="text-reveal">
-                  <span className="block letter-spacing-animation animation-delay-400">Your</span>
+                  <span className="block letter-spacing-animation animation-delay-400">Your </span>
                 </div>
                 <div className="text-reveal">
-                  <span className="block gradient-text animation-delay-600">Signature</span>
+                  <span className="block gradient-text animation-delay-600">Signature </span>
                 </div>
                 <div className="text-reveal">
                   <span className="block glow-text animation-delay-800">Scent</span>
